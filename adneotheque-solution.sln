@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "adneotheque-solution", "adneotheque-solution\adneotheque-solution.csproj", "{61C11565-2C56-445D-A89F-55E55E9F3F47}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adneotheque.Web", "Adneotheque.Web\Adneotheque.Web.csproj", "{61C11565-2C56-445D-A89F-55E55E9F3F47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adneotheque.Entities", "Adneotheque.Entities\Adneotheque.Entities.csproj", "{A8A23AA2-D6D5-4C90-8E94-233342E08ADA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adneotheque.Data", "Adneotheque.Data\Adneotheque.Data.csproj", "{76F723C7-4433-4D01-89D0-9395657084AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{61C11565-2C56-445D-A89F-55E55E9F3F47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61C11565-2C56-445D-A89F-55E55E9F3F47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61C11565-2C56-445D-A89F-55E55E9F3F47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8A23AA2-D6D5-4C90-8E94-233342E08ADA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8A23AA2-D6D5-4C90-8E94-233342E08ADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8A23AA2-D6D5-4C90-8E94-233342E08ADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8A23AA2-D6D5-4C90-8E94-233342E08ADA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76F723C7-4433-4D01-89D0-9395657084AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76F723C7-4433-4D01-89D0-9395657084AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76F723C7-4433-4D01-89D0-9395657084AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76F723C7-4433-4D01-89D0-9395657084AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
