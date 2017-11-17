@@ -1,0 +1,33 @@
+﻿@model IPagedList<DocumentViewModel>
+
+<div id="documentList">
+    
+    <div class="pagedList" data-otf-target="#documentList">
+        @Html.PagedListPager(Model, page => Url.Action("DisplayAll", new { page }),
+            PagedListRenderOptions.MinimalWithItemCountText)
+    </div>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Title)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

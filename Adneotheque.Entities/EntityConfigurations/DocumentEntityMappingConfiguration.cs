@@ -20,9 +20,19 @@ namespace Adneotheque.Entities.EntityConfigurations
                 .HasMaxLength(100);
 
             //Navigation properties
-
             HasMany(d => d.Authors)
                 .WithMany(d => d.Documents);
+
+            ////Many to many need configurations ?
+            //modelBuilder.Entity<Student>()
+            //    .HasMany<Course>(s => s.Courses)
+            //    .WithMany(c => c.Students)
+            //    .Map(cs =>
+            //    {
+            //        cs.MapLeftKey("StudentRefId");
+            //        cs.MapRightKey("CourseRefId");
+            //        cs.ToTable("StudentCourse");
+            //    });
         }
     }
 }

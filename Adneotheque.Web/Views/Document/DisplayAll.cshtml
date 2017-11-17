@@ -1,33 +1,26 @@
-﻿@model IEnumerable<Adneotheque.ViewModels.DocumentViewModel>
+﻿@model IPagedList<DocumentViewModel>
 
 @{
     ViewBag.Title = "DisplayAll";
 }
 
-<h2>DisplayAll</h2>
+<h2>Adneothèque's content</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Insert a new document", "Create")<br />
+    @Html.ActionLink("A document is back", "DocumentReturn")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
+@using (Ajax.BeginForm(
+    new AjaxOptions
+    {
+        HttpMethod = "get",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "documentList"
+    }))
+{
+    <input type="search" name="searchTerm" data-adneotheque-autocomplete="@Url.Action("Autocomplete")" />
+    <input type="submit" value="Search By Title" class="blueButtonInput" />
 }
 
-</table>
+@Html.Partial("_Document", Model)

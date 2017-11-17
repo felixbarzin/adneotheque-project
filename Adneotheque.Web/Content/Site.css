@@ -22,3 +22,182 @@ select,
 textarea {
     max-width: 280px;
 }
+
+a.linkdisabled {
+    pointer-events: none;
+    cursor: default;
+    color: grey;
+    text-decoration: none;
+}
+
+.blueButtonLink {
+    background-color: #008CBA; /*Blue*/
+    border: none;
+    color: white;
+    padding: 7px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 11px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+a.blueButtonLink {
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+}
+
+    a.blueButtonLink:hover {
+        box-shadow: 0px 0px 50px #008CBA;
+        z-index: 2;
+        -webkit-transition: all 200ms ease-in;
+        -webkit-transform: scale(1.5);
+        -ms-transition: all 200ms ease-in;
+        -ms-transform: scale(1.5);
+        -moz-transition: all 200ms ease-in;
+        -moz-transform: scale(1.5);
+        transition: all 200ms ease-in;
+        transform: scale(1.5);
+    }
+
+.blueButtonInput {
+    background-color: #008CBA; /* Blue */
+    border: none;
+    color: white;
+    padding: 10px 27px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.greenButtonInput {
+    background-color: #4CAF50; /*Green*/
+    border: none;
+    color: white;
+    padding: 7px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 11px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.redButtonInput:hover {
+    opacity: 0.85;
+    background-color: #4CAF50; /*Green*/
+}
+
+.redButtonInput {
+    background-color: #f44336; /*Red*/
+    border: none;
+    color: white;
+    padding: 7px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 11px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.blueButtonInput:hover {
+    opacity: 0.5;
+}
+
+.magazineActionLink {
+    background-color: hsl(12,100%,87.5%);
+    border: none;
+    color: black;
+    padding: 10px 27px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+    .magazineActionLink:hover {
+        opacity: 0.5;
+    }
+
+.comicsActionLink {
+    background-color: hsl(45,100%,87.5%);
+    border: none;
+    color: black;
+    padding: 10px 27px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+    .comicsActionLink:hover {
+        opacity: 0.5;
+    }
+
+.othersActionLink {
+    background-color: hsl(78,100%,87.5%);
+    border: none;
+    color: black;
+    padding: 10px 27px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+    .othersActionLink:hover {
+        opacity: 0.5;
+    }
+
+.divCreateFormActionLink {
+    background-color: #008CBA; /*hsl(78,100%,87.5%);*/
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    text-decoration: none;
+    /*cursor: pointer;*/
+}
+
+.actionLinkClickable {
+    padding: 45px 120px 45px 120px;
+    margin: 0px;
+    text-decoration: none;
+    color: white;
+}
+
+.divCreateFormActionLink:hover {
+    border-right: solid;
+    text-decoration: none;
+}
+
+a:focus {
+    outline: none;
+}
+
+a:hover, a:focus {
+    text-decoration: none;
+}
+
+input {
+    max-width: 395px;
+}
+
+.guidDiv {
+    height: 100%;
+    margin-top: 100px;
+    border-left: solid;
+}
+
+.borderButton {
+    background-color: white;
+    color: black;
+    border: 2px solid #008CBA;
+}

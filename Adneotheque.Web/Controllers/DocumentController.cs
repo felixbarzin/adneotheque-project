@@ -5,16 +5,17 @@ using System.Web;
 using System.Web.Mvc;
 using Adneotheque.Data.Services;
 using System.Threading.Tasks;
+using PagedList;
 
 namespace adneotheque_solution.Controllers
 {
     public class DocumentController : Controller
     {
-        private DocumentService documentService;
+        private readonly DocumentService _documentService;
         
         public DocumentController()
         {
-            documentService = new DocumentService();
+            _documentService = new DocumentService();
         }
         // GET: Document
         public ActionResult Index()
@@ -22,12 +23,30 @@ namespace adneotheque_solution.Controllers
             return View();
         }
 
-        public async Task<ActionResult> DisplayAll()
+        public async Task<ActionResult> DisplayAll(string searchTerm, int page = 1)
         {
-            var documents = await documentService.DocumentRepository.GetAllAsync();
+            var documents = await _documentService.DocumentRepository.GetAllAsync();
+            var documents2 = await _documentService.DocumentRepository.GetAllWithSearchTermAndPageAsync(searchTerm, page);
 
-            return View(documents);
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_Document", documents2);
+            }
+
+            return View(documents2);
         }
+
+        public async Task<ActionResult> Autocomplete(string term)
+        {
+            var model =  await _documentService.DocumentRepository.AutocompleteAsync(term);
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        //public async Task<ActionResult> DocumentReturn()
+        //{
+        //    return View();
+        //}
 
         // GET: Document/Details/5
         public ActionResult Details(int id)
