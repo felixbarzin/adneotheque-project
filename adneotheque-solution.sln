@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adneotheque.Entities", "Adn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adneotheque.Data", "Adneotheque.Data\Adneotheque.Data.csproj", "{76F723C7-4433-4D01-89D0-9395657084AF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adneotheque.ViewModels", "Adneotheque.ViewModels\Adneotheque.ViewModels.csproj", "{4FE39A8C-CA61-4549-B9B7-16B3B83EF6F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{76F723C7-4433-4D01-89D0-9395657084AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76F723C7-4433-4D01-89D0-9395657084AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76F723C7-4433-4D01-89D0-9395657084AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FE39A8C-CA61-4549-B9B7-16B3B83EF6F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FE39A8C-CA61-4549-B9B7-16B3B83EF6F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FE39A8C-CA61-4549-B9B7-16B3B83EF6F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FE39A8C-CA61-4549-B9B7-16B3B83EF6F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
