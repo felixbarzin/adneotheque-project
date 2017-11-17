@@ -58,7 +58,7 @@ namespace Adneotheque.Data.Repositories
 
         }
 
-        public async Task<IEnumerable<DocumentViewModel>> GetAllWithSearchTermAndPageAsync(string searchTerm, int page)
+        public async Task<IPagedList<DocumentViewModel>> GetAllWithSearchTermAndPageAsync(string searchTerm, int page)
         {
             var documents = await GetAllAsync();
 
