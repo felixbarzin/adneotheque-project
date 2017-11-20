@@ -21,8 +21,7 @@ namespace Adneotheque.Entities.Persistence.EntityConfigurations
                 .HasMaxLength(100);
 
             Property(d => d.DocumentCategories)
-                .IsRequired()
-                .HasColumnName("Category");
+                .IsRequired();
 
             Property(d => d.DocumentId)
                 .IsRequired();

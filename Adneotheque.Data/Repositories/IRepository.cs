@@ -11,8 +11,7 @@ namespace Adneotheque.Data.Repositories
         Task<IEnumerable<T>> GetAllAsync();
         T GetById(int id);
         Task Insert(T t);
-        void Update(T t);
+        Task Update(T t);
         void Delete(int id);
-        //void SaveChangesAsync();
     }
 }

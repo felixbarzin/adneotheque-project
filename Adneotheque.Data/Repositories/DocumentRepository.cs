@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -15,8 +16,9 @@ namespace Adneotheque.Data.Repositories
 {
     public interface IDocumentRepository<TDocument> : IRepository<DocumentViewModel>
     {
-        TDocument GetByDocumentId(string documentId);
+        Task<TDocument> GetByDocumentIdAsync(string documentId);
         Task<IEnumerable<object>> AutocompleteAsync(string term);
+        Task<IEnumerable<object>> AutocompleteDocumentIdAsync(string term);
     }
 
     public class DocumentRepository : IDocumentRepository<DocumentViewModel>
@@ -27,11 +29,6 @@ namespace Adneotheque.Data.Repositories
         {
             _adneothequeDbContext = dbContext;
         }
-
-        //public async Task SaveChangesAsync(CancellationToken cancellationToken)
-        //{
-
-        //}
 
         public async Task Insert(DocumentViewModel t)
         {
@@ -93,16 +90,54 @@ namespace Adneotheque.Data.Repositories
                 });
         }
 
-        public DocumentViewModel GetByDocumentId(string documentId)
+        public async Task<IEnumerable<object>> AutocompleteDocumentIdAsync(string term)
         {
-            throw new NotImplementedException();
+            var documents = await GetAllAsync();
+
+            return documents
+                .Where(d => d.DocumentId.StartsWith(term) && d.Available == false)
+                .Take(5)
+                .Select(d => new
+                {
+                    label = d.DocumentId
+                });
+
+            //var test = documents
+            //    .Where(d => d.DocumentId.StartsWith(term) && d.Available == false)
+            //    .Take(5)
+            //    .Select(d => new
+            //    {
+            //        label = d.Title
+            //    });
+
+            //return documents
+            //    .Where(d => d.DocumentId.StartsWith(term) && d.Available == false)
+            //    .Take(5)
+            //    .Select(d => new
+            //    {
+            //        label = d.Title
+            //    });
         }
 
-
-
-        public void Update(DocumentViewModel t)
+        public async Task<DocumentViewModel> GetByDocumentIdAsync(string documentId)
         {
-            throw new NotImplementedException();
+            //var test = _adneothequeDbContext.Documents.First(d => d.DocumentId == documentId);
+
+            return await _adneothequeDbContext
+                .Documents
+                .ProjectTo<DocumentViewModel>()
+                .FirstAsync(d => d.DocumentId == documentId);
+        }
+
+        public async Task Update (DocumentViewModel t)
+        {
+            var document = _adneothequeDbContext.Documents.First(d => d.DocumentId == t.DocumentId);
+
+            AutoMapper.Mapper.Map(t, document);
+
+            _adneothequeDbContext.Entry(document).State = System.Data.Entity.EntityState.Modified;
+
+            await _adneothequeDbContext.SaveChangesAsync();
         }
 
         private bool _disposed = false;

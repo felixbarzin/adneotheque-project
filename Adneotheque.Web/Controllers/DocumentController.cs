@@ -18,11 +18,6 @@ namespace adneotheque_solution.Controllers
         {
             _documentService = new DocumentService();
         }
-        // GET: Document
-        public ActionResult Index()
-        {
-            return View();
-        }
 
         public async Task<ActionResult> DisplayAll(string searchTerm, int page = 1)
         {
@@ -44,10 +39,51 @@ namespace adneotheque_solution.Controllers
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
-        //public async Task<ActionResult> DocumentReturn()
-        //{
-        //    return View();
-        //}
+        //When the user use the search input for a document to bring back, this action makes it more friendly for the user because it helps with autocompletion
+        public async Task<ActionResult> AutocompleteDocumentId(string term)
+        {
+            var model = await _documentService.DocumentRepository.AutocompleteDocumentIdAsync(term);
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult DocumentReturn()
+        {
+            
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> DocumentReturn(DocumentViewModel documentViewModel)
+        {
+            documentViewModel.Available = true;
+
+            await _documentService.DocumentRepository.Update(documentViewModel);
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> DocumentReturnSearch(string searchTerm = "")
+        {
+            if (searchTerm != "")
+            {
+                try
+                {
+                    DocumentViewModel documentViewModel = await _documentService.DocumentRepository.GetByDocumentIdAsync(searchTerm);
+                    return PartialView("_DocumentReturn", documentViewModel);
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+
+            }
+
+            return View();
+        }
 
         // GET: Document/Details/5
         public ActionResult Details(int id)
@@ -72,14 +108,14 @@ namespace adneotheque_solution.Controllers
 
         // POST: Document/Create
         [HttpPost]
-        public ActionResult Create(DocumentViewModel documentViewModel)
+        public async Task<ActionResult> Create(DocumentViewModel documentViewModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
                     documentViewModel.Available = true;
-                    _documentService.DocumentRepository.Insert(documentViewModel);
+                    await _documentService.DocumentRepository.Insert(documentViewModel);
                     return RedirectToAction("DisplayAll");
                 }
 

@@ -1,0 +1,27 @@
+﻿@model Adneotheque.ViewModels.DocumentViewModel
+
+@{
+    ViewBag.Title = "DocumentReturn";
+}
+
+<h2>Return a document</h2>
+<p>Insert the document identifier in the input above</p>
+
+@using (Ajax.BeginForm(
+    "DocumentReturnSearch",
+    "Document",
+    new AjaxOptions
+    {
+        HttpMethod = "post",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "fetchedDocument"
+    }))
+{
+    <input type="search" size="37" name="searchTerm" data-adneotheque-autocomplete-documentId="@Url.Action("AutocompleteDocumentId")" class="input"/>
+    <input type="submit" value="Search By Document ID" class="blueButtonInput" />
+}
+
+<div id="fetchedDocument">
+</div>
+
+@Html.ActionLink("Back to list", "DisplayAll", "Document")

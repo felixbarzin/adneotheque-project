@@ -1,0 +1,38 @@
+﻿@model Adneotheque.ViewModels.DocumentViewModel
+
+<div id="fetchedDocument">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                Available
+            </th>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.Title)
+            </td>
+            <td>
+                @using (Html.BeginForm("DocumentReturn", "Document", FormMethod.Post))
+                {
+                    @*@Html.HiddenFor(b => b.Author)
+    @Html.HiddenFor(b => b.Available)
+    @Html.HiddenFor(b => b.Category)
+    @Html.HiddenFor(b => b.Edition)
+    @Html.HiddenFor(b => b.Id)
+    @Html.HiddenFor(b => b.ISBN)
+    @Html.HiddenFor(b => b.Language)
+    @Html.HiddenFor(b => b.Pages)
+    @Html.HiddenFor(b => b.Reviews)
+    @Html.HiddenFor(b => b.Summary)*@
+                    @Html.HiddenFor(b => b.Title)
+                    @Html.HiddenFor(b => b.DocumentId)
+
+                    <input type="submit" value="Make it available" class="redButtonInput"/>
+                }
+            </td>
+        </tr>
+    </table>
+</div>

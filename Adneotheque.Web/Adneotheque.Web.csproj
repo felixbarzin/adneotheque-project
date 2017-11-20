@@ -235,6 +235,8 @@
     <Content Include="Views\Document\Create.cshtml" />
     <Content Include="Views\Document\_FormCreateDocument.cshtml" />
     <Content Include="Views\Document\_GUIDButton.cshtml" />
+    <Content Include="Views\Document\DocumentReturn.cshtml" />
+    <Content Include="Views\Document\_DocumentReturn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\" />
