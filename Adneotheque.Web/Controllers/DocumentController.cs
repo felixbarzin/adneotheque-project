@@ -88,7 +88,9 @@ namespace adneotheque_solution.Controllers
         // GET: Document/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var model = _documentService.DocumentRepository.GetById(id);
+
+            return View(model);
         }
 
         // GET: Document/Create
@@ -129,20 +131,26 @@ namespace adneotheque_solution.Controllers
         }
 
         // GET: Document/Edit/5
+        [HttpGet]
         public ActionResult Edit(int id)
         {
-            return View();
+            DocumentViewModel model = _documentService.DocumentRepository.GetById(id);
+
+            return View(model);
         }
 
         // POST: Document/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public async Task<ActionResult> Edit(DocumentViewModel model)
         {
             try
             {
-                // TODO: Add update logic here
+                if (ModelState.IsValid)
+                {
+                    await _documentService.DocumentRepository.Update(model);
+                }
 
-                return RedirectToAction("Index");
+                return RedirectToAction("DisplayAll");
             }
             catch
             {

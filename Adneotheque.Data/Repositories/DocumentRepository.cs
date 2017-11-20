@@ -46,11 +46,11 @@ namespace Adneotheque.Data.Repositories
 
         public DocumentViewModel GetById(int id)
         {
-            var documentt = new Document()
-            { Id = 1, Title = "test" };
-            //var document = machin get by id
-            var document = AutoMapper.Mapper.Map<Document, DocumentViewModel>(documentt);
-            return document;
+            Document document = _adneothequeDbContext.Documents.Find(id);
+
+            var model = AutoMapper.Mapper.Map<Document, DocumentViewModel>(document);
+
+            return model;
         }
 
         public async Task<IEnumerable<DocumentViewModel>> GetAllAsync()

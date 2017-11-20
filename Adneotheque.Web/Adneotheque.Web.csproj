@@ -237,6 +237,8 @@
     <Content Include="Views\Document\_GUIDButton.cshtml" />
     <Content Include="Views\Document\DocumentReturn.cshtml" />
     <Content Include="Views\Document\_DocumentReturn.cshtml" />
+    <Content Include="Views\Document\Edit.cshtml" />
+    <Content Include="Views\Document\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\" />
