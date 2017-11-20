@@ -16,6 +16,7 @@ namespace Adneotheque.Data
             AutoMapper.Mapper.Initialize(config =>
             {
                 config.CreateMap<Document, DocumentViewModel>();
+                config.CreateMap<DocumentViewModel, Document>();
             });
         }
     }

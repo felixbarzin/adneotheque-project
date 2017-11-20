@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Adneotheque.Entities;
 using Adneotheque.Entities.Entities;
@@ -27,9 +28,18 @@ namespace Adneotheque.Data.Repositories
             _adneothequeDbContext = dbContext;
         }
 
-        public void Add(DocumentViewModel t)
+        //public async Task SaveChangesAsync(CancellationToken cancellationToken)
+        //{
+
+        //}
+
+        public async Task Insert(DocumentViewModel t)
         {
-            throw new NotImplementedException();
+            var document = AutoMapper.Mapper.Map<DocumentViewModel, Document>(t);
+
+            _adneothequeDbContext.Documents.Add(document);
+
+            await _adneothequeDbContext.SaveChangesAsync();
         }
 
         public void Delete(int id)
@@ -40,7 +50,7 @@ namespace Adneotheque.Data.Repositories
         public DocumentViewModel GetById(int id)
         {
             var documentt = new Document()
-                { Id = 1, Title = "test" };
+            { Id = 1, Title = "test" };
             //var document = machin get by id
             var document = AutoMapper.Mapper.Map<Document, DocumentViewModel>(documentt);
             return document;
@@ -88,7 +98,7 @@ namespace Adneotheque.Data.Repositories
             throw new NotImplementedException();
         }
 
-        
+
 
         public void Update(DocumentViewModel t)
         {

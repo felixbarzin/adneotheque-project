@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Adneotheque.Data.Services;
 using System.Threading.Tasks;
+using Adneotheque.ViewModels;
 using PagedList;
 
 namespace adneotheque_solution.Controllers
@@ -55,7 +56,7 @@ namespace adneotheque_solution.Controllers
         }
 
         // GET: Document/Create
-        // Use Ajax for displaying a form allowing the user to add a book in DB
+        // Use Ajax for displaying a form allowing the user to add a document in DB
         [HttpGet]
         public ActionResult Create(String category = null)
         {
@@ -71,16 +72,22 @@ namespace adneotheque_solution.Controllers
 
         // POST: Document/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(DocumentViewModel documentViewModel)
         {
             try
             {
-                // TODO: Add insert logic here
+                if (ModelState.IsValid)
+                {
+                    documentViewModel.Available = true;
+                    _documentService.DocumentRepository.Insert(documentViewModel);
+                    return RedirectToAction("DisplayAll");
+                }
 
-                return RedirectToAction("Index");
+                return View(documentViewModel);
             }
-            catch
+            catch(Exception e)
             {
+                //TODO : Implement error strategy
                 return View();
             }
         }
