@@ -39,9 +39,23 @@ namespace Adneotheque.Data.Repositories
             await _adneothequeDbContext.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var document = _adneothequeDbContext.Documents.Find(id);
+                //_adneothequeDbContext.Entry(document).State = EntityState.Deleted;
+
+                //_adneothequeDbContext.Documents.Load();
+                _adneothequeDbContext.Documents.Remove(document);
+
+
+                await _adneothequeDbContext.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         public DocumentViewModel GetById(int id)
@@ -95,11 +109,11 @@ namespace Adneotheque.Data.Repositories
             var documents = await GetAllAsync();
 
             return documents
-                .Where(d => d.DocumentId.StartsWith(term) && d.Available == false)
+                .Where(d => d.DocumentIdentifier.StartsWith(term) && d.Available == false)
                 .Take(5)
                 .Select(d => new
                 {
-                    label = d.DocumentId
+                    label = d.DocumentIdentifier
                 });
 
             //var test = documents
@@ -126,12 +140,12 @@ namespace Adneotheque.Data.Repositories
             return await _adneothequeDbContext
                 .Documents
                 .ProjectTo<DocumentViewModel>()
-                .FirstAsync(d => d.DocumentId == documentId);
+                .FirstAsync(d => d.DocumentIdentifier == documentId);
         }
 
         public async Task Update (DocumentViewModel t)
         {
-            var document = _adneothequeDbContext.Documents.First(d => d.DocumentId == t.DocumentId);
+            var document = _adneothequeDbContext.Documents.First(d => d.DocumentIdentifier == t.DocumentIdentifier);
 
             AutoMapper.Mapper.Map(t, document);
 

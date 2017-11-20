@@ -45,7 +45,7 @@ namespace Adneotheque.Data.Migrations
                 .RuleFor(d => d.Id, f => f.IndexFaker)
                 .RuleFor(d => d.Title, f => f.Lorem.Sentence(2))
                 .RuleFor(d => d.DocumentCategories, f => (DocumentCategories)values.GetValue(rnd.Next(values.Length)))
-                .RuleFor(d => d.DocumentId, f => Guid.NewGuid().ToString())
+                .RuleFor(d => d.DocumentIdentifier, f => Guid.NewGuid().ToString())
                 .RuleFor(d => d.Available, f => f.Random.Bool())
                 .RuleFor(d => d.Authors, f => authors.OrderBy(x => rnd.Next()).Take(rnd.Next(1, 4)).ToList())
                 .RuleFor(d => d.Reviews, f => new Faker<Review>()

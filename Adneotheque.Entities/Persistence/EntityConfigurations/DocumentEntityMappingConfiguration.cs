@@ -23,7 +23,7 @@ namespace Adneotheque.Entities.Persistence.EntityConfigurations
             Property(d => d.DocumentCategories)
                 .IsRequired();
 
-            Property(d => d.DocumentId)
+            Property(d => d.DocumentIdentifier)
                 .IsRequired();
 
             Property(d => d.Available)
@@ -32,6 +32,12 @@ namespace Adneotheque.Entities.Persistence.EntityConfigurations
             //Navigation properties
             HasMany(d => d.Authors)
                 .WithMany(d => d.Documents);
+
+            HasMany(d => d.Reviews)
+                .WithRequired(r => r.Document)
+                .HasForeignKey(r => r.DocumentId)
+            .WillCascadeOnDelete(true);
+
 
             ////Many to many need configurations ?
             //modelBuilder.Entity<Student>()

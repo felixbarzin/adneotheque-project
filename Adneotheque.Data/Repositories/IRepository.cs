@@ -12,6 +12,6 @@ namespace Adneotheque.Data.Repositories
         T GetById(int id);
         Task Insert(T t);
         Task Update(T t);
-        void Delete(int id);
+        Task Delete(int id);
     }
 }

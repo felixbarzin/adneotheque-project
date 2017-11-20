@@ -24,8 +24,7 @@ namespace Adneotheque.Entities.Persistence.EntityConfigurations
 
             HasRequired(r => r.Document)
                 .WithMany(d => d.Reviews)
-                .HasForeignKey(r => r.DocumentId)
-                .WillCascadeOnDelete(false);
+                .HasForeignKey(r => r.DocumentId);
         }
     }
 }

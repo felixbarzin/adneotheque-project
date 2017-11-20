@@ -12,7 +12,7 @@ namespace Adneotheque.Entities.Entities
         public int Id { get; set; }
         public string Title { get; set; }
         public DocumentCategories DocumentCategories { get; set; }
-        public string DocumentId { get; set; }
+        public string DocumentIdentifier { get; set; }
         public Boolean Available { get; set; }
 
         //Navigation properties

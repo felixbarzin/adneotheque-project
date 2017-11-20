@@ -13,7 +13,7 @@ namespace Adneotheque.Data.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201711170908357_Initial"; }
+            get { return "201711201923337_Initial"; }
         }
         
         string IMigrationMetadata.Source

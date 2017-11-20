@@ -89,9 +89,9 @@
   <ItemGroup>
     <Compile Include="AdneothequeDbContext.cs" />
     <Compile Include="MappingConfiguration.cs" />
-    <Compile Include="Migrations\201711170908357_Initial.cs" />
-    <Compile Include="Migrations\201711170908357_Initial.Designer.cs">
-      <DependentUpon>201711170908357_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201711201923337_Initial.cs" />
+    <Compile Include="Migrations\201711201923337_Initial.Designer.cs">
+      <DependentUpon>201711201923337_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -116,12 +116,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201711170908357_Initial.resx">
-      <DependentUpon>201711170908357_Initial.cs</DependentUpon>
-    </EmbeddedResource>
+    <Content Include="Content\PagedList.css" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\PagedList.css" />
+    <EmbeddedResource Include="Migrations\201711201923337_Initial.resx">
+      <DependentUpon>201711201923337_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

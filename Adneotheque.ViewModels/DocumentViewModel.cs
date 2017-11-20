@@ -19,7 +19,7 @@ namespace Adneotheque.ViewModels
         public DocumentCategories DocumentCategories { get; set; }
 
         [Required]
-        public string DocumentId { get; set; }
+        public string DocumentIdentifier { get; set; }
 
         [Required]
         public Boolean Available { get; set; }

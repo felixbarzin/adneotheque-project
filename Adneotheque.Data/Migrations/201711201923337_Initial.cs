@@ -23,6 +23,9 @@ namespace Adneotheque.Data.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Title = c.String(nullable: false, maxLength: 100),
+                        DocumentCategories = c.Int(nullable: false),
+                        DocumentIdentifier = c.String(nullable: false),
+                        Available = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -35,7 +38,7 @@ namespace Adneotheque.Data.Migrations
                         DocumentId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Documents", t => t.DocumentId)
+                .ForeignKey("dbo.Documents", t => t.DocumentId, cascadeDelete: true)
                 .Index(t => t.DocumentId);
             
             CreateTable(

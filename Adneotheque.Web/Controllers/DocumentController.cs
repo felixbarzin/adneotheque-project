@@ -159,20 +159,24 @@ namespace adneotheque_solution.Controllers
         }
 
         // GET: Document/Delete/5
-        public ActionResult Delete(int id)
+        [HttpGet]
+        public ActionResult Delete(int? id)
         {
-            return View();
+            DocumentViewModel model = _documentService.DocumentRepository.GetById(id.Value);
+
+            return View(model);
         }
 
         // POST: Document/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(int id)
         {
             try
             {
-                // TODO: Add delete logic here
+                await _documentService.DocumentRepository.Delete(id);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("DisplayAll");
             }
             catch
             {
