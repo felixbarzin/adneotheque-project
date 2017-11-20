@@ -55,8 +55,17 @@ namespace adneotheque_solution.Controllers
         }
 
         // GET: Document/Create
-        public ActionResult Create()
+        // Use Ajax for displaying a form allowing the user to add a book in DB
+        [HttpGet]
+        public ActionResult Create(String category = null)
         {
+            if (Request.IsAjaxRequest() && category != null)
+            {
+                ViewBag.Category = category;
+
+                return PartialView("_FormCreateDocument");
+            }
+
             return View();
         }
 

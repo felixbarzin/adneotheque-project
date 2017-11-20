@@ -6,7 +6,7 @@
         //var $form = $input.parents("from:first");//dear input, go and look through the parents above you, all the DOM elements above you, and find the first form.
         //$form.submit();//once I find the form, there's a jQuery API where I can tell the form to submit itself
         $input.effect("slide");
-        var $form = $('#bookList');
+        var $form = $('#documentList');
         //$form.effect("slide", {}, 1000);
         //$form.effect("pulsate", { times: 1 }, 1500);
         $form.delay(0).fadeOut('slow').delay(5).fadeIn('slow');
@@ -53,7 +53,7 @@
         };
 
         $.ajax(options).done(function (data) {
-            var target = $('#bookList');
+            var target = $('#documentList');
             $(target).replaceWith(data);
         });
 

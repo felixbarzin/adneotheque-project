@@ -4,8 +4,9 @@ using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Adneotheque.Entities.Entities;
 
-namespace Adneotheque.Entities.EntityConfigurations
+namespace Adneotheque.Entities.Persistence.EntityConfigurations
 {
     public class ReviewEntityMappingConfiguration : EntityTypeConfiguration<Review>
     {

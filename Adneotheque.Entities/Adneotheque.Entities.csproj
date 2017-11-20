@@ -72,13 +72,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Author.cs" />
-    <Compile Include="Document.cs" />
-    <Compile Include="EntityConfigurations\AuthorEntityMappingConfiguration.cs" />
-    <Compile Include="EntityConfigurations\DocumentEntityMappingConfiguration.cs" />
-    <Compile Include="EntityConfigurations\ReviewEntityMappingConfiguration.cs" />
+    <Compile Include="Entities\Author.cs" />
+    <Compile Include="Entities\Document.cs" />
+    <Compile Include="Enums\DocumentCategories.cs" />
+    <Compile Include="Persistence\EntityConfigurations\AuthorEntityMappingConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\DocumentEntityMappingConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\ReviewEntityMappingConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Review.cs" />
+    <Compile Include="Entities\Review.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

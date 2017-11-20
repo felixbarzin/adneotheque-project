@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Adneotheque.Entities.Enums;
 
-namespace Adneotheque.Entities
+namespace Adneotheque.Entities.Entities
 {
     public class Document
     {
         public int Id { get; set; }
         public string Title { get; set; }
+        public DocumentCategories DocumentCategories { get; set; }
+        public string DocumentId { get; set; }
+        public Boolean Available { get; set; }
 
         //Navigation properties
         public virtual ICollection<Author> Authors { get; set; }

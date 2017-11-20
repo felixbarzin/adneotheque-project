@@ -12,6 +12,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().Title)
             </th>
+            <th>
+                Category
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Available)
+            </th>
             <th></th>
         </tr>
 
@@ -20,6 +26,12 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DocumentCategories)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Available)
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |

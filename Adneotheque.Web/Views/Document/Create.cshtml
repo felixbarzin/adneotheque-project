@@ -1,0 +1,75 @@
+﻿@using Adneotheque.Entities.Entities
+@using Adneotheque.Entities.Enums
+@model Adneotheque.ViewModels.DocumentViewModel
+
+@*TODO : Refactorer le menu*@
+
+@{
+    ViewBag.Title = "Create";
+}
+<script src="~/Scripts/Javascript/AjaxForceValidateForm.js"></script>
+<h2>Insert a new document</h2>
+<p>What kind of document :</p>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 divCreateFormActionLink">
+            @Ajax.ActionLink("Book",//Text to display
+                "Create",//Action Method Name
+                "Document",
+                new { category = DocumentCategories.Book},
+                new AjaxOptions
+                {
+                    UpdateTargetId = "addFormCreate",
+                    InsertionMode = InsertionMode.Replace,
+                    HttpMethod = "GET",
+                    OnSuccess = "validateForm"
+                }, new { @class = "actionLinkClickable" })
+        </div>
+        <div class="col-lg-3 divCreateFormActionLink">
+            @Ajax.ActionLink("Magazine",//Text to display
+                "Create",//Action Method Name
+                "Document",
+                new { category = DocumentCategories.Magazine },
+                new AjaxOptions
+                {
+                    UpdateTargetId = "addFormCreate",
+                    InsertionMode = InsertionMode.Replace,
+                    HttpMethod = "GET",
+                    OnSuccess = "validateForm"
+                },
+                new { @class = "actionLinkClickable" })
+        </div>
+        <div class="col-lg-3 divCreateFormActionLink">
+            @Ajax.ActionLink("Comics",//Text to display
+                "Create",//Action Method Name
+                "Document",//Controller
+                new { category = DocumentCategories.Comic },
+                new AjaxOptions
+                {
+                    UpdateTargetId = "addFormCreate",
+                    InsertionMode = InsertionMode.Replace,
+                    HttpMethod = "GET",
+                    OnSuccess = "validateForm"
+                },
+                new { @class = "actionLinkClickable" })
+        </div>
+        <div class="col-lg-3 divCreateFormActionLink">
+            @Ajax.ActionLink("Others",//Text to display
+                "Create",//Action Method Name
+                "Document",
+                new { category = DocumentCategories.Other },
+                new AjaxOptions
+                {
+                    UpdateTargetId = "addFormCreate",
+                    InsertionMode = InsertionMode.Replace,
+                    HttpMethod = "GET",
+                    OnSuccess = "validateForm"
+                },
+                new { @class = "actionLinkClickable" })
+        </div>
+    </div>
+</div>
+<div id="addFormCreate"></div>
+<div>
+    @Html.ActionLink("Back to List", "DisplayAll", "Document")
+</div>

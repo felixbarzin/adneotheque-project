@@ -43,5 +43,11 @@
     <Compile Include="DocumentViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Adneotheque.Entities\Adneotheque.Entities.csproj">
+      <Project>{A8A23AA2-D6D5-4C90-8E94-233342E08ADA}</Project>
+      <Name>Adneotheque.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Adneotheque.Entities;
+using Adneotheque.Entities.Entities;
 using Adneotheque.ViewModels;
 
 namespace Adneotheque.Data

@@ -5,9 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Adneotheque.Entities;
-using Adneotheque.Entities.EntityConfigurations;
+using Adneotheque.Entities.Persistence.EntityConfigurations;
 using System.Reflection;
 using System.Data.Entity.ModelConfiguration;
+using Adneotheque.Entities.Entities;
 
 namespace Adneotheque.Data
 {

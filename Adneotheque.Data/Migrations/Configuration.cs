@@ -1,7 +1,10 @@
 using System.Security.Cryptography.X509Certificates;
 using Adneotheque.Entities;
+using Adneotheque.Entities.Entities;
+using Adneotheque.Entities.Enums;
 using Bogus;
 using FizzWare.NBuilder;
+using Faker = Bogus.Faker;
 
 namespace Adneotheque.Data.Migrations
 {
@@ -36,9 +39,14 @@ namespace Adneotheque.Data.Migrations
 
             var reviews = reviewsFaker.Generate(25);
 
+            Array values = Enum.GetValues(typeof(DocumentCategories));
+
             var documentsFaker = new Faker<Document>()
                 .RuleFor(d => d.Id, f => f.IndexFaker)
                 .RuleFor(d => d.Title, f => f.Lorem.Sentence(2))
+                .RuleFor(d => d.DocumentCategories, f => (DocumentCategories)values.GetValue(rnd.Next(values.Length)))
+                .RuleFor(d => d.DocumentId, f => Guid.NewGuid().ToString())
+                .RuleFor(d => d.Available, f => f.Random.Bool())
                 .RuleFor(d => d.Authors, f => authors.OrderBy(x => rnd.Next()).Take(rnd.Next(1, 4)).ToList())
                 .RuleFor(d => d.Reviews, f => new Faker<Review>()
                     .RuleFor(r => r.Id, fa => fa.IndexFaker)

@@ -1,0 +1,52 @@
+﻿@model Adneotheque.ViewModels.DocumentViewModel
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            @using (Html.BeginForm()) 
+            {
+                @Html.AntiForgeryToken()
+    
+                <div class="form-horizontal">
+                    <h4>Add a document in the library</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="DocumentCategories">Identifier</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DocumentId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", Title ="Click on the button to Generate a unique identifier for the document." } })
+                            @Html.ValidationMessageFor(model => model.DocumentId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+        
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="DocumentCategories">Category</label>
+                        <div class="col-md-10">
+
+                            <input class="form-control text-box single-line" data-val="true" data-val-required="The DocumentCategories field is required." id="DocumentCategories" name="DocumentCategories" readonly="readonly" type="text" value=@ViewBag.Category>
+
+                            @Html.ValidationMessageFor(model => model.DocumentCategories, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-lg-4 guidDiv">
+            @Html.Partial("_GUIDButton")
+        </div>
+    </div>
+</div>

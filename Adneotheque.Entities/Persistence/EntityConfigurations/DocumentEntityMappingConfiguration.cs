@@ -4,8 +4,9 @@ using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Adneotheque.Entities.Entities;
 
-namespace Adneotheque.Entities.EntityConfigurations
+namespace Adneotheque.Entities.Persistence.EntityConfigurations
 {
     class DocumentEntityMappingConfiguration : EntityTypeConfiguration<Document>
     {
@@ -18,6 +19,16 @@ namespace Adneotheque.Entities.EntityConfigurations
             Property(d => d.Title)
                 .IsRequired()
                 .HasMaxLength(100);
+
+            Property(d => d.DocumentCategories)
+                .IsRequired()
+                .HasColumnName("Category");
+
+            Property(d => d.DocumentId)
+                .IsRequired();
+
+            Property(d => d.Available)
+                .IsRequired();
 
             //Navigation properties
             HasMany(d => d.Authors)
