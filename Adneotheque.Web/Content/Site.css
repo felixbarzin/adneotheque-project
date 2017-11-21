@@ -9,6 +9,21 @@
     padding-right: 15px;
 }
 
+footer {
+    position: absolute;
+    bottom: 0;
+    overflow: hidden;
+}
+
+.blueFont {
+    color: #008CBA; /*Blue*/
+}
+
+/*.adneoNavbar {
+    /*background-color: white;*/
+    /*border-bottom: none;*/
+}*/
+
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */

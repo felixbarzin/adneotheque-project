@@ -24,6 +24,46 @@ namespace Adneotheque.ViewModels
         [Required]
         public Boolean Available { get; set; }
 
+        private int _rating;
+
+        public int Rating
+        {
+            get
+            {
+                decimal countLikes = 0;
+                decimal rating = 0;
+
+                foreach (var review in Reviews)
+                {
+                    if (review.Rating == true) countLikes++;
+                }
+
+                if (countLikes != 0) rating = ((countLikes / Reviews.Count) * 100);
+
+                _rating = Convert.ToInt32(rating);
+
+                return this._rating;                 
+            }
+        }
+
         public virtual ICollection<ReviewViewModel> Reviews { get; set; }
+
+        ///// <summary>
+        ///// Calcule le rating d'un document : pourcentage de like
+        ///// </summary>
+        //public decimal DocumentRating()
+        //{
+        //    decimal countLikes = 0;
+        //    decimal rating = 0;
+
+        //    foreach (var review in Reviews)
+        //    {
+        //        if (review.Rating == true) countLikes++;
+        //    }
+
+        //    if (countLikes != 0) rating = ((countLikes / Reviews.Count) * 100);
+
+        //    return rating;
+        //}
     }
 }
