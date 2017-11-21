@@ -10,8 +10,9 @@ namespace Adneotheque.Data.Repositories
     {
         Task<IEnumerable<T>> GetAllAsync();
         T GetById(int id);
-        Task Insert(T t);
-        Task Update(T t);
+        Task<T> GetByIdAsync(int id);
+        Task InsertAsync(T t);
+        Task UpdateAsync(T t);
         Task Delete(int id);
     }
 }

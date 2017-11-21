@@ -23,5 +23,7 @@ namespace Adneotheque.ViewModels
 
         [Required]
         public Boolean Available { get; set; }
+
+        public virtual ICollection<ReviewViewModel> Reviews { get; set; }
     }
 }

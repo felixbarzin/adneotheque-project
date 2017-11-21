@@ -20,6 +20,13 @@ namespace Adneotheque.Entities.Persistence.EntityConfigurations
                 .IsRequired()
                 .HasMaxLength(500);
 
+            Property(r => r.Rating)
+                .IsRequired();
+
+            Property(r => r.ReviewerName)
+                .IsRequired()
+                .HasMaxLength(75);
+
             //Navigation properties
 
             HasRequired(r => r.Document)

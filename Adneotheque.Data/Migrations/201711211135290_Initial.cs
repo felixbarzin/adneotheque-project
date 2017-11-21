@@ -35,6 +35,8 @@ namespace Adneotheque.Data.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Body = c.String(nullable: false, maxLength: 500),
+                        Rating = c.Boolean(nullable: false),
+                        ReviewerName = c.String(nullable: false, maxLength: 75),
                         DocumentId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)

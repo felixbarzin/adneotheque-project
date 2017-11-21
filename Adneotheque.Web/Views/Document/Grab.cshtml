@@ -1,0 +1,17 @@
+﻿@model Adneotheque.ViewModels.DocumentViewModel
+
+@{
+    ViewBag.Title = "Grab";
+}
+
+<h2>Grab that</h2>
+
+<p>Do you really want to grab <b>@Model.Title</b> ?</p><br />
+
+@using (Html.BeginForm("GrabPost", "Document", new {id = Model.Id},FormMethod.Post, null))
+{
+    <input type="submit" value="Yes, GRAB" class="greenButtonInput" />
+}
+
+<input type="button" value="No, Back to List" onclick="location.href='@Url.Action("DisplayAll","Document")'" class="redButtonInput" />
+

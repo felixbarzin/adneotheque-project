@@ -1,0 +1,11 @@
+﻿@model Adneotheque.ViewModels.DocumentViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Review for @Model.Title</h2>
+@Html.Partial("_Review", Model.Reviews)
+<p>
+    @Html.ActionLink("Create New", "Create", "Review", new { id = Model.Id }, null)<br />
+    @Html.ActionLink("Back to list", "DisplayAll", "Document")
+</p>

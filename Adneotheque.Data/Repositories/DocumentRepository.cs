@@ -24,17 +24,19 @@ namespace Adneotheque.Data.Repositories
     public class DocumentRepository : IDocumentRepository<DocumentViewModel>
     {
         private readonly AdneothequeDbContext _adneothequeDbContext;
+        private readonly DbSet<Document> _documentContext;
 
         public DocumentRepository(AdneothequeDbContext dbContext)
         {
             _adneothequeDbContext = dbContext;
+            _documentContext = dbContext.Documents;
         }
 
-        public async Task Insert(DocumentViewModel t)
+        public async Task InsertAsync(DocumentViewModel t)
         {
             var document = AutoMapper.Mapper.Map<DocumentViewModel, Document>(t);
 
-            _adneothequeDbContext.Documents.Add(document);
+            _documentContext.Add(document);
 
             await _adneothequeDbContext.SaveChangesAsync();
         }
@@ -44,11 +46,8 @@ namespace Adneotheque.Data.Repositories
             try
             {
                 var document = _adneothequeDbContext.Documents.Find(id);
-                //_adneothequeDbContext.Entry(document).State = EntityState.Deleted;
 
-                //_adneothequeDbContext.Documents.Load();
                 _adneothequeDbContext.Documents.Remove(document);
-
 
                 await _adneothequeDbContext.SaveChangesAsync();
             }
@@ -60,10 +59,17 @@ namespace Adneotheque.Data.Repositories
 
         public DocumentViewModel GetById(int id)
         {
-            Document document = _adneothequeDbContext.Documents.Find(id);
+            Document document = _documentContext.Find(id);
 
             var model = AutoMapper.Mapper.Map<Document, DocumentViewModel>(document);
 
+            return model;
+        }
+
+        public async Task<DocumentViewModel> GetByIdAsync(int id)
+        {
+            Document document = await _documentContext.FindAsync(id);
+            var model = AutoMapper.Mapper.Map<Document, DocumentViewModel>(document);
             return model;
         }
 
@@ -115,27 +121,10 @@ namespace Adneotheque.Data.Repositories
                 {
                     label = d.DocumentIdentifier
                 });
-
-            //var test = documents
-            //    .Where(d => d.DocumentId.StartsWith(term) && d.Available == false)
-            //    .Take(5)
-            //    .Select(d => new
-            //    {
-            //        label = d.Title
-            //    });
-
-            //return documents
-            //    .Where(d => d.DocumentId.StartsWith(term) && d.Available == false)
-            //    .Take(5)
-            //    .Select(d => new
-            //    {
-            //        label = d.Title
-            //    });
         }
 
         public async Task<DocumentViewModel> GetByDocumentIdAsync(string documentId)
         {
-            //var test = _adneothequeDbContext.Documents.First(d => d.DocumentId == documentId);
 
             return await _adneothequeDbContext
                 .Documents
@@ -143,12 +132,11 @@ namespace Adneotheque.Data.Repositories
                 .FirstAsync(d => d.DocumentIdentifier == documentId);
         }
 
-        public async Task Update (DocumentViewModel t)
+        public async Task UpdateAsync (DocumentViewModel t)
         {
-            var document = _adneothequeDbContext.Documents.First(d => d.DocumentIdentifier == t.DocumentIdentifier);
-
+            var document = _documentContext
+                .First(d => d.DocumentIdentifier == t.DocumentIdentifier);
             AutoMapper.Mapper.Map(t, document);
-
             _adneothequeDbContext.Entry(document).State = System.Data.Entity.EntityState.Modified;
 
             await _adneothequeDbContext.SaveChangesAsync();

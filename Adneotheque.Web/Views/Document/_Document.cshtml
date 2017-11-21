@@ -45,10 +45,10 @@
                         }
                         else
                         {
-                            @Html.ActionLink("GRAB", "Grab", new { selectedDocId = item.Id }, new { @class = "blueButtonLink" })
+                            @Html.ActionLink("GRAB", "Grab", new { id = item.Id }, new { @class = "blueButtonLink" })
                         }
                     } |
-                    @Html.ActionLink("Review", "Index", "Reviews", new { id = item.Id }, null)
+                    @Html.ActionLink("Review", "Index", "Review", new { id = item.Id }, null)
                 </td>
             </tr>
         }

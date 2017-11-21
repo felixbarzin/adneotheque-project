@@ -18,7 +18,8 @@
                 @using (Html.BeginForm("DocumentReturn", "Document", FormMethod.Post))
                 {
                     @Html.HiddenFor(b => b.Title)
-                    @Html.HiddenFor(b => b.DocumentId)
+                    @Html.HiddenFor(b => b.DocumentIdentifier)
+                    @Html.HiddenFor(b => b.Id)
 
                     <input type="submit" value="Make it available" class="redButtonInput"/>
                 }

@@ -17,6 +17,7 @@ namespace Adneotheque.Data
             {
                 config.CreateMap<Document, DocumentViewModel>();
                 config.CreateMap<DocumentViewModel, Document>();
+                config.CreateMap<ReviewViewModel, Review>();
             });
         }
     }

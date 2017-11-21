@@ -59,7 +59,7 @@ namespace adneotheque_solution.Controllers
         {
             documentViewModel.Available = true;
 
-            await _documentService.DocumentRepository.Update(documentViewModel);
+            await _documentService.DocumentRepository.UpdateAsync(documentViewModel);
 
             return View();
         }
@@ -117,7 +117,7 @@ namespace adneotheque_solution.Controllers
                 if (ModelState.IsValid)
                 {
                     documentViewModel.Available = true;
-                    await _documentService.DocumentRepository.Insert(documentViewModel);
+                    await _documentService.DocumentRepository.InsertAsync(documentViewModel);
                     return RedirectToAction("DisplayAll");
                 }
 
@@ -147,7 +147,7 @@ namespace adneotheque_solution.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    await _documentService.DocumentRepository.Update(model);
+                    await _documentService.DocumentRepository.UpdateAsync(model);
                 }
 
                 return RedirectToAction("DisplayAll");
@@ -182,6 +182,24 @@ namespace adneotheque_solution.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Grab(int id)
+        {
+            var model = await _documentService.DocumentRepository.GetByIdAsync(id);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> GrabPost(int id)
+        {
+            DocumentViewModel model = await _documentService.DocumentRepository.GetByIdAsync(id);
+            model.Available = false;
+            await _documentService.DocumentRepository.UpdateAsync(model);
+
+            return RedirectToAction("DisplayAll");
         }
     }
 }
