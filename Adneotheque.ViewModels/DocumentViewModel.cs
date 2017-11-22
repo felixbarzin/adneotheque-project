@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Adneotheque.Entities.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace Adneotheque.ViewModels
 {
@@ -33,9 +34,12 @@ namespace Adneotheque.ViewModels
                 decimal countLikes = 0;
                 decimal rating = 0;
 
-                foreach (var review in Reviews)
+                if (Reviews != null)
                 {
-                    if (review.Rating == true) countLikes++;
+                    foreach (var review in Reviews)
+                    {
+                        if (review.Rating == true) countLikes++;
+                    }
                 }
 
                 if (countLikes != 0) rating = ((countLikes / Reviews.Count) * 100);
@@ -46,7 +50,20 @@ namespace Adneotheque.ViewModels
             }
         }
 
+        public string SelectedCategory { get; set; }
+
         public virtual ICollection<ReviewViewModel> Reviews { get; set; }
+
+        public List<SelectListItem> GetDocumentCategoriesList()
+        {
+            List<SelectListItem> documentCategoriesList = new List<SelectListItem>();
+            foreach (string d in Enum.GetNames(typeof(DocumentCategories)))
+            {
+                documentCategoriesList.Add(new SelectListItem(){ Text = d, Value = d});
+            }
+
+            return documentCategoriesList;
+        }
 
         ///// <summary>
         ///// Calcule le rating d'un document : pourcentage de like

@@ -21,15 +21,27 @@ namespace adneotheque_solution.Controllers
 
         public async Task<ActionResult> DisplayAll(string searchTerm, int page = 1)
         {
-            var documents = await _documentService.DocumentRepository.GetAllAsync();
-            var documents2 = await _documentService.DocumentRepository.GetAllWithSearchTermAndPageAsync(searchTerm, page);
+            //var documents = await _documentService.DocumentRepository.GetAllAsync();
+            var documents = await _documentService.DocumentRepository.GetAllWithSearchTermAndPageAsync(searchTerm, page);
 
             if (Request.IsAjaxRequest())
             {
-                return PartialView("_Document", documents2);
+                return PartialView("_Document", documents);
             }
 
-            return View(documents2);
+            return View(documents);
+        }
+
+        public async Task<ActionResult> DisplayByCategory(DocumentViewModel model, int page = 1)
+        {
+            if (model.SelectedCategory == null)
+            {
+                return RedirectToAction("DisplayAll");
+            }
+
+            var documents = await _documentService.DocumentRepository.GetDocumentsByCategoryAsync(model.SelectedCategory, page);
+
+            return PartialView("_Document", documents);
         }
 
         public async Task<ActionResult> Autocomplete(string term)

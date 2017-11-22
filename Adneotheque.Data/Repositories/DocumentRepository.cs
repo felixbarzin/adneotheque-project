@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Adneotheque.Entities;
 using Adneotheque.Entities.Entities;
+using Adneotheque.Entities.Enums;
 using Adneotheque.ViewModels;
 using AutoMapper.QueryableExtensions;
 using PagedList;
@@ -17,8 +18,12 @@ namespace Adneotheque.Data.Repositories
     public interface IDocumentRepository<TDocument> : IRepository<DocumentViewModel>
     {
         Task<TDocument> GetByDocumentIdAsync(string documentId);
+
         Task<IEnumerable<object>> AutocompleteAsync(string term);
         Task<IEnumerable<object>> AutocompleteDocumentIdAsync(string term);
+
+        Task<IPagedList<TDocument>> GetAllWithSearchTermAndPageAsync(string searchTerm, int page);
+        Task<IPagedList<TDocument>> GetDocumentsByCategoryAsync(string category, int page);
     }
 
     public class DocumentRepository : IDocumentRepository<DocumentViewModel>
@@ -93,6 +98,16 @@ namespace Adneotheque.Data.Repositories
             return documents
                 .OrderBy(d => d.Title)
                 .Where(d => searchTerm == null || d.Title.StartsWith(searchTerm))
+                .Select(d => d)
+                .ToPagedList(page, 5);
+        }
+
+        public async Task<IPagedList<DocumentViewModel>> GetDocumentsByCategoryAsync(string category, int page)
+        {
+            var documents = await GetAllAsync();
+
+            return documents.OrderBy(d => d.Title)
+                .Where(d => d.DocumentCategories == (DocumentCategories)System.Enum.Parse(typeof(DocumentCategories),category))
                 .Select(d => d)
                 .ToPagedList(page, 5);
         }

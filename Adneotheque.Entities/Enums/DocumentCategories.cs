@@ -8,9 +8,9 @@ namespace Adneotheque.Entities.Enums
 {
     public enum DocumentCategories
     {
-        Book,
-        Comic,
-        Magazine,
-        Other
+        Book ,
+        Comic ,
+        Magazine ,
+        Other 
     }
 }
