@@ -1,0 +1,39 @@
+﻿@model IPagedList<DocumentViewModel>
+
+@{
+    ViewBag.Title = "DisplayAll";
+}
+
+<br />
+<br />
+
+<p>
+    @Html.ActionLink("Insert a new document", "Create")<br />
+    @Html.ActionLink("A document is back", "DocumentReturn")
+</p>
+
+<br />
+
+<div class="container body-content">
+    <div class="row">
+        <div class="col-md-4">
+
+            @using (Html.BeginForm("DisplayWithFilters", "Document"))
+            {
+                @Html.DropDownList("SelectedCategory",
+                    new SelectList(Model.First().GetDocumentCategoriesList(), "Value", "Text"),
+                    "Select",
+                    new { @class = "form-control" })
+
+                <input type="submit"
+                       name="buttonFilter"
+                       value="Search By Category"
+                       class="blueButtonInput" />
+            }
+
+        </div>
+        @Html.Partial("_SearchByTitle", Model)
+
+
+    
+</div>

@@ -3,7 +3,7 @@
 }
 
 function Guid() {
-    $("#DocumentId").effect("highlight", { color: '#008CBA' }, 3000);
-    var input = document.getElementById("DocumentId");
+    $("#DocumentIdentifier").effect("highlight", { color: '#008CBA' }, 3000);
+    var input = document.getElementById("DocumentIdentifier");
     input.value = (S4() + S4() + "-" + S4() + "-4" + S4().substr(0, 3) + "-" + S4() + "-" + S4() + S4() + S4()).toLowerCase();
 }

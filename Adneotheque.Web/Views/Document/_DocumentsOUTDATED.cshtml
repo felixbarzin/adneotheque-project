@@ -1,26 +1,27 @@
-﻿@model Adneotheque.ViewModels.DocumentsWithFilters
+﻿@model IPagedList<DocumentViewModel>
 
 
-<script src="~/Scripts/Javascript/myEffects.js"></script>
+@{
+//var searchT = ViewBag.SearchTerm;
+//var categ = ViewBag.Category;
+//var searchT = Session["SearchTerm"];
+//var categ = Session["Category"];
+}
+@*<input type="hidden" name="searchTerm" value=@searchT />*@
 
 <div id="documentList">
-    
-    
+    @*<p> session searchterm : @Session["SearchTerm"]</p>
+    <p> session category : @Session["SelectedCategory"]</p>*@ 
+
     <div class="pagedList" data-otf-target="#documentList">
-        @Html.PagedListPager(Model.DocumentViewModelPagedList, page => Url.Action("DisplayWithFilters", new {
-       page = page,
-       selectedCategory = @Model.SelectedCategory,
-       available = @Model.Available,
-       searchTerm = @Model.SearchTerm,
-       sort = "Rating",
-   }),
+        @Html.PagedListPager(Model, page => Url.Action("DisplayAll", new {page = page, sort = ViewBag.SortOrder}),
             PagedListRenderOptions.MinimalWithItemCountText)
     </div>
 
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.DocumentViewModelPagedList.FirstOrDefault().Title)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Title)
             </th>
             <th>
                 Category
@@ -32,26 +33,24 @@
                     "Document",
                     new
                     {
-                        sort = "Rating",
-                        selectedCategory = @Model.SelectedCategory,
-                        available = @Model.Available,
-                        searchTerm = @Model.SearchTerm
+                        sort = "Rating"
+                        //searchTerm = @searchT,
+                        //category = @categ
                     },
                     new AjaxOptions
                     {
                         HttpMethod = "get",
                         InsertionMode = InsertionMode.Replace,
-                        UpdateTargetId = "documentList",
-                        OnSuccess = "fadeInAndOut"
+                        UpdateTargetId = "documentList"
                     })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DocumentViewModelPagedList.FirstOrDefault().Available)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Available)
             </th>
             <th></th>
         </tr>
 
-        @foreach (var item in Model.DocumentViewModelPagedList)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
@@ -76,9 +75,9 @@
                     @Html.DisplayFor(modelItem => item.Available)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
+                    @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
+                    @Html.ActionLink("Details", "Details", new {id = item.Id}) |
+                    @Html.ActionLink("Delete", "Delete", new {id = item.Id}) |
                     @{
                         if (item.Available == false)
                         {
@@ -87,13 +86,14 @@
                         }
                         else
                         {
-                            @Html.ActionLink("GRAB", "Grab", new { id = item.Id }, new { @class = "blueButtonLink" })
+                            @Html.ActionLink("GRAB", "Grab", new {id = item.Id}, new {@class = "blueButtonLink"})
                         }
                     } |
-                    @Html.ActionLink("Review", "Index", "Review", new { id = item.Id }, null)
+                    @Html.ActionLink("Review", "Index", "Review", new {id = item.Id}, null)
                 </td>
             </tr>
-                        }
+        }
 
     </table>
 </div>
+

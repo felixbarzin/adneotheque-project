@@ -6,10 +6,8 @@
         //var $form = $input.parents("from:first");//dear input, go and look through the parents above you, all the DOM elements above you, and find the first form.
         //$form.submit();//once I find the form, there's a jQuery API where I can tell the form to submit itself
         $input.effect("slide");
-        var $form = $('#documentList');
-        //$form.effect("slide", {}, 1000);
-        //$form.effect("pulsate", { times: 1 }, 1500);
-        $form.delay(0).fadeOut('slow').delay(5).fadeIn('slow');
+        //var $form = $('#documentList');
+        //$form.delay(0).fadeOut('slow').delay(5).fadeIn('slow');
         
         $input.submit();
         $input.val(ui.item.label);
@@ -67,7 +65,10 @@
 
     };
 
+
+
     $("input[data-adneotheque-autocomplete]").each(createAutocomplete);
     $(".body-content").on("click", ".pagedList a", getPage);
     $("input[data-adneotheque-autocomplete-documentId]").each(createAutocompleteForDocumentId);
 });
+

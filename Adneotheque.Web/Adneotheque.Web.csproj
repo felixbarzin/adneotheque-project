@@ -200,6 +200,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Javascript\adneotheque.js" />
     <Content Include="Scripts\Javascript\AjaxForceValidateForm.js" />
+    <Content Include="Scripts\Javascript\myEffects.js" />
     <Content Include="Scripts\Javascript\RandomIdentifier.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
@@ -231,8 +232,6 @@
     <Content Include="Views\Home\Library.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Document\DisplayAll.cshtml" />
-    <Content Include="Views\Document\_Documents.cshtml" />
     <Content Include="Views\Document\Create.cshtml" />
     <Content Include="Views\Document\_FormCreateDocument.cshtml" />
     <Content Include="Views\Document\_GUIDButton.cshtml" />
@@ -245,8 +244,9 @@
     <Content Include="Views\Review\Index.cshtml" />
     <Content Include="Views\Review\_Review.cshtml" />
     <Content Include="Views\Review\Create.cshtml" />
-    <Content Include="Views\Document\_SearchByTitle.cshtml" />
     <Content Include="Views\Document\_Test.cshtml" />
+    <Content Include="Views\Document\DisplayAll.cshtml" />
+    <Content Include="Views\Document\_Documents.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

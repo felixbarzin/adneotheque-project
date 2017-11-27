@@ -1,4 +1,9 @@
-﻿body {
+﻿html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -10,7 +15,8 @@
 }
 
 footer {
-    position: absolute;
+    position: fixed;
+    background-color: white;
     bottom: 0;
     overflow: hidden;
 }

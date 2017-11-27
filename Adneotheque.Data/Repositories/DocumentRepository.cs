@@ -19,10 +19,12 @@ namespace Adneotheque.Data.Repositories
     {
         Task<TDocument> GetByDocumentIdAsync(string documentId);
 
-        Task<IEnumerable<object>> AutocompleteAsync(string term, DocumentViewModel model, string category);
+        Task<IEnumerable<object>> AutocompleteAsync(string term, /*DocumentViewModel model,*/ string category);
         Task<IEnumerable<object>> AutocompleteDocumentIdAsync(string term);
 
         Task<IEnumerable<TDocument>> GetAllWithSearchTermAndPageAsync(string searchTerm);
+        Task<IEnumerable<TDocument>> GetDocumentsFiltered(string category, string searchTerm,
+            string filter, Boolean available);
         Task<IEnumerable<TDocument>> GetAllWithSearchTermAndPageAsync(string searchTerm, int page);
         Task<IEnumerable<TDocument>> GetDocumentsByCategoryAsync(string category, int page);
         Task<IEnumerable<TDocument>> GetDocumentsByCategoryAndSearchtermAsync(string category, string searchTerm, int page);
@@ -105,7 +107,7 @@ namespace Adneotheque.Data.Repositories
         }
 
         public async Task<IEnumerable<DocumentViewModel>> GetDocumentsFiltered(string category, string searchTerm,
-            string filter)
+            string filter, Boolean available)
         {
             var documents = await GetAllAsync();
 
@@ -144,6 +146,22 @@ namespace Adneotheque.Data.Repositories
                         break;
                 }
             }
+
+            if (available == true)
+            {
+                documents = documents
+                    .Where(d => d.Available == true)
+                    .Select(d => d)
+                    .ToList();
+            }
+            //else
+            //{
+            //    documents = documents
+            //        .Where((d => d.Available == true || d.Available == false))
+            //        .Select(d => d)
+            //        .ToList();
+
+            //}
 
 
             return documents;
@@ -211,6 +229,11 @@ namespace Adneotheque.Data.Repositories
         {
             var documents = await GetAllAsync();
 
+            if (String.IsNullOrEmpty(category))
+            {
+                return documents;
+            }
+
             return documents.OrderBy(d => d.Title)
                 .Where(d => d.DocumentCategories == (DocumentCategories)System.Enum.Parse(typeof(DocumentCategories),category))
                 .Select(d => d)
@@ -229,14 +252,15 @@ namespace Adneotheque.Data.Repositories
                 .ToList();
         }
 
-        public async Task<IEnumerable<object>> AutocompleteAsync(string term, DocumentViewModel model, string category)
+        public async Task<IEnumerable<object>> AutocompleteAsync(string term, /*DocumentViewModel model,*/ string category)
         {
             var documents = await GetAllAsync();
 
             if (category != null)
             {
                 return documents
-                    .Where(d => d.Title.ToLower().Contains(term) && d.DocumentCategories == (DocumentCategories)System.Enum.Parse(typeof(DocumentCategories), category))
+                    .Where(d => d.Title.ToLower().Contains(term) 
+                    && d.DocumentCategories == (DocumentCategories)System.Enum.Parse(typeof(DocumentCategories), category))
                     .Take(4)
                     .Select(d => new
                     {

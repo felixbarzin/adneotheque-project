@@ -1,7 +1,7 @@
-﻿@model IPagedList<DocumentViewModel>
+﻿@model Adneotheque.ViewModels.DocumentsWithFilters
 
 @{
-    ViewBag.Title = "DisplayAll";
+    ViewBag.Title = "DisplayAllTest";
 }
 
 <br />
@@ -21,9 +21,9 @@
             @using (Html.BeginForm("DisplayWithFilters", "Document"))
             {
                 @Html.DropDownList("SelectedCategory",
-                    new SelectList(Model.First().GetDocumentCategoriesList(), "Value", "Text"),
+                    new SelectList(Model.DocumentViewModelPagedList.First().GetDocumentCategoriesList(), "Value", "Text"),
                     "Select",
-                    new { @class = "form-control" })
+                    new { @class = "form-control", Name = "Selectedcategory" })
 
                 <input type="submit"
                        name="buttonFilter"
@@ -32,8 +32,49 @@
             }
 
         </div>
-        @Html.Partial("_SearchByTitle", Model)
 
 
-    
+        @using (Ajax.BeginForm(
+                    "DisplayWithFilters",
+                    "Document",
+                    new AjaxOptions
+                    {
+                        HttpMethod = "get",
+                        InsertionMode = InsertionMode.Replace,
+                        UpdateTargetId = "documentList",
+                        OnSuccess = "fadeInAndOut"
+                    }))
+        {
+
+            @Html.HiddenFor(Model => Model.SelectedCategory);
+
+            <div class="col-md-4">
+                <input type="search"
+                       name="searchTerm"
+                       data-adneotheque-autocomplete="@Url.Action("Autocomplete", new {category = @Model.SelectedCategory})"
+                       class="form-control" />
+                <input type="submit"
+                       @*name="buttonFilter"*@
+                       value="Search By Title"
+                       class="blueButtonInput" />
+            </div>
+
+                <div class="col-md-4">
+
+                    @*<label>
+                            <input type="checkbox" name="available" value="true"/>
+                            Show only availble documents ?
+                        </label><br />*@
+                    @Html.EditorFor(m => m.Available)
+                    <label>Show only available documents ?</label>
+                    <br />
+                    <input type="submit"
+                           value="Change"
+                           class="blueButtonInput" />
+                </div>
+        }
+
+    </div>
 </div>
+
+@Html.Partial("_Documents");

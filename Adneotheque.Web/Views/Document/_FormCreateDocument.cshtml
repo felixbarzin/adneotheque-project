@@ -22,8 +22,8 @@
                     <div class="form-group">
                         <label class="control-label col-md-2" for="DocumentCategories">Identifier</label>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.DocumentId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", Title ="Click on the button to Generate a unique identifier for the document." } })
-                            @Html.ValidationMessageFor(model => model.DocumentId, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.DocumentIdentifier, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", Title ="Click on the button to Generate a unique identifier for the document." } })
+                            @Html.ValidationMessageFor(model => model.DocumentIdentifier, "", new { @class = "text-danger" })
                         </div>
                     </div>
         
