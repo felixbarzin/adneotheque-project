@@ -19,34 +19,276 @@ namespace adneotheque_solution.Controllers
             _documentService = new DocumentService();
         }
 
-        public async Task<ActionResult> DisplayAll(string searchTerm, int page = 1)
+        public async Task<ActionResult> DisplayAll(string searchTerm, string buttonCategory, DocumentViewModel model, int page = 1)
         {
-            //var documents = await _documentService.DocumentRepository.GetAllAsync();
+            Session["SearchTerm"] = "";
+            Session["SelectedCategory"] = "";
+        
             var documents = await _documentService.DocumentRepository.GetAllWithSearchTermAndPageAsync(searchTerm, page);
 
             if (Request.IsAjaxRequest())
             {
-                return PartialView("_Document", documents);
+            //    //@ViewBag.SearchTerm = searchTerm;
+            //    //@ViewBag.Category = buttonName;
+
+            //    //Session["SearchTerm"] = searchTerm;
+            //    //Session["Category"] = buttonCategory;
+
+                var filteredList =
+                    await _documentService.DocumentRepository.GetDocumentsFiltered(
+                        Session["SelectedCategory"].ToString(), 
+                        Session["SearchTerm"].ToString(), 
+                        "Rating");
+
+                return PartialView("_Documents", filteredList.ToPagedList(page, 8));
             }
 
-            return View(documents);
+            return View(documents.ToPagedList(page, 8));
         }
 
-        public async Task<ActionResult> DisplayByCategory(DocumentViewModel model, int page = 1)
+        //TEST
+        public async Task<ActionResult> DisplayWithFilters(DocumentViewModel model, string searchTerm, string sort, string buttonFilter, int page = 1)
         {
-            if (model.SelectedCategory == null)
+            IEnumerable<DocumentViewModel> documents = null;
+
+            if (String.IsNullOrEmpty(buttonFilter))
+                buttonFilter = "";
+
+            if (buttonFilter.Equals("Search By Category") && model.SelectedCategory != null)
+                Session["SelectedCategory"] = model.SelectedCategory;
+
+            //if (model.SelectedCategory == null && searchTerm == null)
+            //    Session["SelectedCategory"] = "";
+
+            //searchTerm = String.IsNullOrEmpty(searchTerm) ? Session["SerchTerm"].ToString() : "";
+
+            if (!String.IsNullOrEmpty(sort))
+                if(!Session["SearchTerm"].Equals(null))
+                    searchTerm = String.IsNullOrEmpty(searchTerm) ? Session["SearchTerm"].ToString() : "";
+
+            //searchTerm = String.IsNullOrEmpty(searchTerm) ? Session["SerchTerm"] ?? "";
+
+
+
+            documents = await _documentService.DocumentRepository.GetDocumentsFiltered(
+                    Session["SelectedCategory"].ToString(),
+                    searchTerm,
+                    sort);
+
+            if (buttonFilter.Equals("Search By Category"))
+                return View("DisplayAll", documents.ToPagedList(page, 8));
+
+            return PartialView("_Documents", documents.ToPagedList(page, 8));
+
+        }
+
+        //OK
+        //public async Task<ActionResult> DisplayWithFilters(DocumentViewModel model, string searchTerm, string sort, string buttonFilter, int page = 1)
+        //{
+        //    IEnumerable<DocumentViewModel> documents = null;
+
+        //    if (String.IsNullOrEmpty(buttonFilter))
+        //        buttonFilter = "";
+
+
+        //    var test = buttonFilter.Equals("Search By Category");
+
+        //    if (buttonFilter.Equals("Search By Category") && model.SelectedCategory != null)
+        //    {
+        //        Session["SelectedCategory"] = model.SelectedCategory;
+        //        documents = await _documentService.DocumentRepository.GetDocumentsByCategoryAsync(model.SelectedCategory, page);
+        //        return View("DisplayAll", documents.ToPagedList(page, 8));
+
+        //    }
+        //    else if (buttonFilter.Equals("Search By Title"))
+        //    {
+        //        if (!String.IsNullOrEmpty(Session["SelectedCategory"].ToString()))
+        //        {
+        //            documents = await _documentService.DocumentRepository.GetDocumentsByCategoryAndSearchtermAsync(
+        //                Session["SelectedCategory"].ToString(), searchTerm, page);
+        //            if (Request.IsAjaxRequest())
+        //                return PartialView("_Documents", documents.ToPagedList(page, 8));
+        //        }
+        //        else
+        //        {
+        //            documents = await _documentService.DocumentRepository.GetAllWithSearchTermAndPageAsync(searchTerm, page);
+
+
+        //            if (Request.IsAjaxRequest())
+        //                return PartialView("_Documents", documents.ToPagedList(page ,8));
+        //        }
+        //    }
+        //    else
+        //    {
+        //        documents = await _documentService.DocumentRepository.GetDocumentsFiltered(
+        //            Session["SelectedCategory"].ToString(),
+        //            Session["SearchTerm"].ToString(),
+        //            "Rating");
+
+        //    }
+
+
+        //    return PartialView("_Documents", documents.ToPagedList(page, 8));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //    //var test = searchTerm;
+        //    //IPagedList<DocumentViewModel> documents = null;
+
+        //    //if (model.SelectedCategory != null)
+        //    //    Session["SelectedCategory"] = model.SelectedCategory;
+        //    //else
+        //    //    Session["SelectedCategory"] = "";
+
+        //    //if(String.IsNullOrEmpty(searchTerm))
+        //    //    if(model.SelectedCategory == null)
+        //    //        if (!String.IsNullOrEmpty(Session["SearchTerm"].ToString()))
+        //    //            searchTerm = Session["SearchTerm"].ToString();
+
+        //    ////string searchTerm = Session["SearchTerm"].ToString();
+        //    //string category = Session["SelectedCategory"].ToString();
+
+        //    //if (String.IsNullOrEmpty(searchTerm) && !String.IsNullOrEmpty(category))
+        //    //{
+        //    //    documents = await _documentService.DocumentRepository.GetDocumentsByCategoryAsync(category, page);
+        //    //    //ViewBag.Category = category;
+        //    //    return View("DisplayAll", documents);
+        //    //}
+
+        //    //if (!String.IsNullOrEmpty(searchTerm) && String.IsNullOrEmpty(category))
+        //    //{
+        //    //    documents = await _documentService.DocumentRepository.GetAllWithSearchTermAndPageAsync(searchTerm, page);
+
+        //    //    //ViewBag.SearchTerm = searchTerm;
+
+        //    //    if (Request.IsAjaxRequest())
+        //    //        return PartialView("_Documents", documents);
+
+
+        //    //}
+
+        //    //documents = await _documentService.DocumentRepository.GetDocumentsByCategoryAndSearchtermAsync(category, searchTerm, page);
+
+        //    //if (String.IsNullOrEmpty(sort))
+        //    //{
+        //    //    sort = "Title";
+        //    //}
+
+        //    //if (!String.IsNullOrEmpty(sort))
+        //    //{
+        //    //    switch (sort)
+        //    //    {
+        //    //        case "Title":
+        //    //            documents = documents.OrderBy(d => d.Title).ToPagedList(page, 8);
+        //    //            break;
+        //    //        case "Rating":
+        //    //            documents = documents.OrderByDescending(d => d.Rating).ToPagedList(page, 8);
+        //    //            break;
+        //    //        default:
+        //    //            documents = documents.OrderBy(d => d.Title).ToPagedList(page, 8);
+        //    //            break;
+        //    //    }
+        //    //}
+
+        //    //return View("DisplayAll", documents);
+
+        //}
+
+
+        //public async Task<ActionResult> DisplayByCategory(DocumentViewModel model, int page = 1)
+        //{
+
+        //    if (model.SelectedCategory == null)
+        //    {
+        //        return RedirectToAction("DisplayAll");
+        //    }
+
+        //    var documents = await _documentService.DocumentRepository.GetDocumentsByCategoryAsync(model.SelectedCategory, page);
+
+
+
+
+
+        //    ViewBag.Category = model.SelectedCategory;
+
+        //    return View("DisplayAll", documents);
+        //}
+
+        public async Task<ActionResult> OrderByRating(string searchTerm, string category, DocumentViewModel model, string sort, int page = 1)
+        {
+
+            //var documents = await _documentService.DocumentRepository.GetAllAsync();
+            var documents = await _documentService.DocumentRepository.GetDocumentsByCategoryAndSearchtermAsync(category, searchTerm, page);
+
+            if (String.IsNullOrEmpty(sort))
             {
-                return RedirectToAction("DisplayAll");
+                sort = "Title";
             }
 
-            var documents = await _documentService.DocumentRepository.GetDocumentsByCategoryAsync(model.SelectedCategory, page);
+            if (!String.IsNullOrEmpty(sort))
+            {
+                switch (sort)
+                {
+                    case "Title":
+                        documents = documents.OrderBy(d => d.Title).ToPagedList(page, 8);
+                        break;
+                    case "Rating":
+                        documents = documents.OrderByDescending(d => d.Rating).ToPagedList(page, 8);
+                        break;
+                    default:
+                        documents = documents.OrderBy(d => d.Title).ToPagedList(page, 8);
+                        break;
+                }
+            }
+            
 
-            return PartialView("_Document", documents);
+
+
+            //ViewBag.Category = model.SelectedCategory;
+
+            return PartialView("_Documents", documents);
         }
 
-        public async Task<ActionResult> Autocomplete(string term)
+
+        public async Task<ActionResult> Autocomplete(string term, DocumentViewModel documentViewModel, string category)
         {
-            var model =  await _documentService.DocumentRepository.AutocompleteAsync(term);
+          Session["SearchTerm"] = term;
+
+            if (String.IsNullOrEmpty(category))
+                category = Session["SelectedCategory"].ToString();
+
+            if (category.Equals(""))
+                category = null;
+
+            System.Diagnostics.Debug.WriteLine(term);
+            var test = Session["SearchTerm"];
+
+            var model =  await _documentService.DocumentRepository.AutocompleteAsync(term, documentViewModel, category);
+
+            if (!model.Any())
+            {
+                var notFound = string.Format("Term \"{0}\" cannot be found", term);
+
+                List<object> list = new List<object>
+                {
+                    notFound
+                };
+
+                return Json(list, JsonRequestBehavior.AllowGet);
+            }
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }

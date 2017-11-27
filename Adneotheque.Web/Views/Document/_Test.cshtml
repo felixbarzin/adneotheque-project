@@ -1,7 +1,8 @@
-﻿@model IPagedList<DocumentViewModel>
+﻿
+@model IPagedList<DocumentViewModel>
+
 
 <div id="documentList">
-    
     <div class="pagedList" data-otf-target="#documentList">
         @Html.PagedListPager(Model, page => Url.Action("DisplayAll", new { page }),
             PagedListRenderOptions.MinimalWithItemCountText)
@@ -25,7 +26,7 @@
         </tr>
 
         @foreach (var item in Model)
-            {
+        {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Title)
@@ -34,14 +35,14 @@
                     @Html.DisplayFor(modelItem => item.DocumentCategories)
                 </td>
                 <td>
-                    
+
                     @if (item.Rating >= 50)
                     {
                         <i class="fa fa-thumbs-o-up" style="color: #008CBA"></i>
                     }
                     else
                     {
-                        <i class="fa fa-thumbs-o-up" style="color:grey"></i>
+                        <i class="fa fa-thumbs-o-up" style="color: grey"></i>
                     }
                     @Html.DisplayFor(modelItem => item.Rating) %
                 </td>
@@ -66,7 +67,7 @@
                     @Html.ActionLink("Review", "Index", "Review", new { id = item.Id }, null)
                 </td>
             </tr>
-        }
+                        }
 
     </table>
 </div>

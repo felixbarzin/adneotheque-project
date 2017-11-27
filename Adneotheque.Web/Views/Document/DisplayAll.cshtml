@@ -4,64 +4,36 @@
     ViewBag.Title = "DisplayAll";
 }
 
-<h2>Adneothèque's content</h2>
+<br />
+<br />
 
 <p>
     @Html.ActionLink("Insert a new document", "Create")<br />
     @Html.ActionLink("A document is back", "DocumentReturn")
 </p>
 
+<br />
+
 <div class="container body-content">
     <div class="row">
         <div class="col-md-4">
-            @using (Ajax.BeginForm(
-                new AjaxOptions
-                {
-                    HttpMethod = "get",
-                    InsertionMode = InsertionMode.Replace,
-                    UpdateTargetId = "documentList"
-                }))
-            {
-                <input type="search" name="searchTerm" data-adneotheque-autocomplete="@Url.Action("Autocomplete")" />
-                <input type="submit" value="Search By Title" class="blueButtonInput" />
-            }
-        </div>
-        <div class="col-md-8">
-            @using (Ajax.BeginForm(
-                "DisplayByCategory",
-                new AjaxOptions
-                {
-                    HttpMethod = "get",
-                    InsertionMode = InsertionMode.Replace,
-                    UpdateTargetId = "documentList"
-                }))
-            {
-    @*@Html.EnumDropDownListFor(m => m.FirstOrDefault().DocumentCategories, "Select a category", new { @class = "form-control" })*@
-    @*@Html.EnumDropDownListFor(Model.First().DocumentCategories, "Select a category", new { @class = "form-control" })*@
-    @*@Html.DropDownListFor(m => m.First().DocumentCategories, Model.First().DocumentCategories ,"Select category", new { @class = "form-control" })*@
-    @*@Html.DropDownList("Category",
-        EnumHelper.GetSelectList(typeof(DocumentCate)),
-        "Select category",
-        new { @class = "form-control" })*@
 
-    @*@Html.DropDownListFor(x => x.First().SelectedCategories,
-        new SelectList(Model.First().GetDocumentCategoriesList(), "Value", "Text"),
-        "Select",
-        new { @class = "form-control" })*@
-
+            @using (Html.BeginForm("DisplayWithFilters", "Document"))
+            {
                 @Html.DropDownList("SelectedCategory",
                     new SelectList(Model.First().GetDocumentCategoriesList(), "Value", "Text"),
                     "Select",
                     new { @class = "form-control" })
 
-                <input type="submit" value="Search By Category" class="blueButtonInput" />
+                <input type="submit"
+                       name="buttonFilter"
+                       value="Search By Category"
+                       class="blueButtonInput" />
             }
+
         </div>
-    </div>
+        @Html.Partial("_SearchByTitle", Model)
+
+
+    
 </div>
-
-
-
-
-
-@Html.Partial("_Document", Model)

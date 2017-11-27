@@ -58,7 +58,7 @@ namespace Adneotheque.Data.Migrations
                     .RuleFor(r => r.Body, fa => fa.Lorem.Paragraph()).Generate(rnd.Next(1,10)));
                 
 
-            var documents = documentsFaker.Generate(10);
+            var documents = documentsFaker.Generate(20);
 
             try
             {

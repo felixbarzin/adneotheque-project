@@ -19,11 +19,13 @@ namespace Adneotheque.Data.Repositories
     {
         Task<TDocument> GetByDocumentIdAsync(string documentId);
 
-        Task<IEnumerable<object>> AutocompleteAsync(string term);
+        Task<IEnumerable<object>> AutocompleteAsync(string term, DocumentViewModel model, string category);
         Task<IEnumerable<object>> AutocompleteDocumentIdAsync(string term);
 
-        Task<IPagedList<TDocument>> GetAllWithSearchTermAndPageAsync(string searchTerm, int page);
-        Task<IPagedList<TDocument>> GetDocumentsByCategoryAsync(string category, int page);
+        Task<IEnumerable<TDocument>> GetAllWithSearchTermAndPageAsync(string searchTerm);
+        Task<IEnumerable<TDocument>> GetAllWithSearchTermAndPageAsync(string searchTerm, int page);
+        Task<IEnumerable<TDocument>> GetDocumentsByCategoryAsync(string category, int page);
+        Task<IEnumerable<TDocument>> GetDocumentsByCategoryAndSearchtermAsync(string category, string searchTerm, int page);
     }
 
     public class DocumentRepository : IDocumentRepository<DocumentViewModel>
@@ -91,33 +93,159 @@ namespace Adneotheque.Data.Repositories
 
         }
 
-        public async Task<IPagedList<DocumentViewModel>> GetAllWithSearchTermAndPageAsync(string searchTerm, int page)
+        public async Task<IEnumerable<DocumentViewModel>> GetAllWithSearchTermAndPageAsync(string searchTerm, int page)
         {
             var documents = await GetAllAsync();
 
             return documents
                 .OrderBy(d => d.Title)
-                .Where(d => searchTerm == null || d.Title.StartsWith(searchTerm))
+                .Where(d => searchTerm == null || d.Title.ToLower().Contains(searchTerm.ToLower()))
                 .Select(d => d)
-                .ToPagedList(page, 5);
+                .ToList();
         }
 
-        public async Task<IPagedList<DocumentViewModel>> GetDocumentsByCategoryAsync(string category, int page)
+        public async Task<IEnumerable<DocumentViewModel>> GetDocumentsFiltered(string category, string searchTerm,
+            string filter)
+        {
+            var documents = await GetAllAsync();
+
+            IEnumerable<DocumentViewModel> filteredList = new List<DocumentViewModel>();
+
+
+            if (!String.IsNullOrEmpty(category))
+            {
+                documents = documents
+                    .Where(d => d.DocumentCategories ==
+                                (DocumentCategories) System.Enum.Parse(typeof(DocumentCategories), category))
+                    .Select(d => d)
+                    .ToList();
+            }
+
+
+            if (!String.IsNullOrEmpty(searchTerm))
+            {
+                documents = documents
+                    .Where(d => d.Title.ToLower().Contains(searchTerm.ToLower()))
+                    .Select(d => d)
+                    .ToList();
+            }
+
+            if (!String.IsNullOrEmpty(filter))
+            {
+                switch (filter)
+                {
+                    case "Rating":
+                        documents = documents
+                            .OrderByDescending(d => d.Rating)
+                            .ToList();
+                        break;
+                    default:
+                        documents = documents.OrderBy(d => d.Title);
+                        break;
+                }
+            }
+
+
+            return documents;
+
+            ////On a ni catégorie ni terme de recherche
+            //if (String.IsNullOrEmpty(category) && String.IsNullOrEmpty(searchTerm))
+            //{
+            //    if (!String.IsNullOrEmpty(filter))
+            //    {
+            //        switch (filter)
+            //        {
+            //            case "Rating":
+            //                filteredList = documents
+            //                    .OrderByDescending(d => d.Rating)
+            //                    .ToList();
+            //                break;
+            //            default:
+            //                documents = documents.OrderBy(d => d.Title);
+            //                break;
+            //        }
+            //    }
+            //}
+
+
+
+            ////On a une catégorie et un terme de recherche
+            //if (!String.IsNullOrEmpty(category) && !String.IsNullOrEmpty(searchTerm))
+            //{
+            //    if (!String.IsNullOrEmpty(filter))
+            //    {
+            //        switch (filter)
+            //        {
+            //            case "Rating":
+            //                filteredList = documents
+            //                    .Where(d => d.DocumentCategories ==
+            //                                (DocumentCategories)System.Enum.Parse(typeof(DocumentCategories), category) &&
+            //                                d.Title.ToLower().Contains(searchTerm))
+            //                    .Select(d => d)
+            //                    .OrderBy(d => d.Rating)
+            //                    .ToList();
+            //                break;
+            //            default:
+            //                documents = documents.OrderBy(d => d.Title);
+            //                break;
+            //        }
+            //    }
+            //}
+
+
+            //return filteredList;
+        }
+
+        public async Task<IEnumerable<DocumentViewModel>> GetAllWithSearchTermAndPageAsync(string searchTerm)
+        {
+            var documents = await GetAllAsync();
+
+            return documents
+                .OrderBy(d => d.Title)
+                .Where(d => searchTerm == null || d.Title.ToLower().Contains(searchTerm.ToLower()))
+                .Select(d => d)
+                .ToList();
+        }
+
+        public async Task<IEnumerable<DocumentViewModel>> GetDocumentsByCategoryAsync(string category, int page)
         {
             var documents = await GetAllAsync();
 
             return documents.OrderBy(d => d.Title)
                 .Where(d => d.DocumentCategories == (DocumentCategories)System.Enum.Parse(typeof(DocumentCategories),category))
                 .Select(d => d)
-                .ToPagedList(page, 5);
+                .ToList();
         }
 
-        public async Task<IEnumerable<object>> AutocompleteAsync(string term)
+        public async Task<IEnumerable<DocumentViewModel>> GetDocumentsByCategoryAndSearchtermAsync(string category, string searchTerm, int page)
         {
             var documents = await GetAllAsync();
 
             return documents
-                .Where(d => d.Title.ToLower().StartsWith(term))
+                .Where(d => d.DocumentCategories ==
+                            (DocumentCategories) System.Enum.Parse(typeof(DocumentCategories), category) &&
+                            d.Title.ToLower().Contains(searchTerm))
+                .Select(d => d)
+                .ToList();
+        }
+
+        public async Task<IEnumerable<object>> AutocompleteAsync(string term, DocumentViewModel model, string category)
+        {
+            var documents = await GetAllAsync();
+
+            if (category != null)
+            {
+                return documents
+                    .Where(d => d.Title.ToLower().Contains(term) && d.DocumentCategories == (DocumentCategories)System.Enum.Parse(typeof(DocumentCategories), category))
+                    .Take(4)
+                    .Select(d => new
+                    {
+                        label = d.Title
+                    });
+            }
+            
+            return documents
+                .Where(d => d.Title.ToLower().Contains(term))
                 .Take(4)
                 .Select(d => new
                 {

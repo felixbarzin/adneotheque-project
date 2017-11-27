@@ -1,0 +1,33 @@
+﻿@model IPagedList<DocumentViewModel>
+
+@{
+    var selectedCategory = ViewBag.Category;
+}
+
+<div class="col-md-8">
+    @using (Ajax.BeginForm(
+                "DisplayWithFilters",
+                "Document",
+                new AjaxOptions
+                {
+                    HttpMethod = "get",
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "documentList"
+                }))
+    {
+
+        <input type="search"
+               name="searchTerm"
+               data-adneotheque-autocomplete="@Url.Action("Autocomplete", new {category = @selectedCategory })"
+               class="form-control" />
+        <input type="submit"
+               name="buttonFilter"
+               value="Search By Title"
+               class="blueButtonInput" />
+
+    }
+</div>
+</div>
+@Html.Partial("_Documents")
+
+

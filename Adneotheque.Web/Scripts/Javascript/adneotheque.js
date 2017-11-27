@@ -10,7 +10,9 @@
         //$form.effect("slide", {}, 1000);
         //$form.effect("pulsate", { times: 1 }, 1500);
         $form.delay(0).fadeOut('slow').delay(5).fadeIn('slow');
+        
         $input.submit();
+        $input.val(ui.item.label);
     }
 
     var submitAutocompleteDiv = function (event, ui) {
@@ -27,6 +29,10 @@
         var options = {
             source: $input.attr("data-adneotheque-autocomplete"),
             select: submitAutocompleteForm
+            //close: function (event, ui) {
+            //    $(this).val("");
+            //    return false;
+            //}
         };
 
         $input.autocomplete(options);
