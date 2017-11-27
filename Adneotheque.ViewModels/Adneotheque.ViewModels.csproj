@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthorViewModel.cs" />
     <Compile Include="DocumentsWithFilters.cs" />
     <Compile Include="DocumentViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

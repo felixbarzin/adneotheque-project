@@ -54,6 +54,8 @@ namespace Adneotheque.ViewModels
 
         public virtual ICollection<ReviewViewModel> Reviews { get; set; }
 
+        //public virtual ICollection<AuthorViewModel> Authors { get; set; }
+
         public List<SelectListItem> GetDocumentCategoriesList()
         {
             List<SelectListItem> documentCategoriesList = new List<SelectListItem>();

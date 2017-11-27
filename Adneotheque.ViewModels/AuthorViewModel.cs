@@ -5,15 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adneotheque.Entities.Entities
+namespace Adneotheque.ViewModels
 {
-    public class Author
+    public class AuthorViewModel
     {
+        [Key]
+        [Required]
         public int Id { get; set; }
+
+        [Required]
         public string Firstname { get; set; }
         public string Lastname { get; set; }
-
-        //Navigation properties
-        public virtual ICollection<Document> Documents { get; set; }
     }
 }

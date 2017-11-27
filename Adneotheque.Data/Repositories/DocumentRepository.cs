@@ -303,7 +303,13 @@ namespace Adneotheque.Data.Repositories
         {
             var document = _documentContext
                 .First(d => d.DocumentIdentifier == t.DocumentIdentifier);
-            AutoMapper.Mapper.Map(t, document);
+            //var test = AutoMapper.Mapper.Map<DocumentViewModel, Document>(t);
+
+                
+                //AutoMapper.Mapper.Map<Document>(t);
+                AutoMapper.Mapper.Map(t, document);
+
+
             _adneothequeDbContext.Entry(document).State = System.Data.Entity.EntityState.Modified;
 
             await _adneothequeDbContext.SaveChangesAsync();
