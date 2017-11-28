@@ -10,13 +10,8 @@ namespace adneotheque_solution.Controllers
 {
     public class HomeController : Controller
     {
-        //private DocumentService documentService;
 
-        //public HomeController()
-        //{
-        //    documentService = new DocumentService();
-        //}
-
+        [OutputCache(CacheProfile="Long", VaryByHeader = "X-Requested-With")]
         public ActionResult Index()
         {
             return View();
