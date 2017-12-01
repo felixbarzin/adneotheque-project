@@ -13,7 +13,7 @@ namespace Adneotheque.Data.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<AdneothequeDbContext>
+    public sealed class Configuration : DbMigrationsConfiguration<AdneothequeDbContext>
     {
         public Configuration()
         {
@@ -74,7 +74,7 @@ namespace Adneotheque.Data.Migrations
                 throw new Exception(e.Message);
             }
 
-            
+
         }
     }
 }

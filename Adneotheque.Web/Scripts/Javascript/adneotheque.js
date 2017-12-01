@@ -1,4 +1,4 @@
-﻿$(function () {
+﻿$(document).ready(function () {
 
     var submitAutocompleteForm = function (event, ui) {
         var $input = $(this);//The this reference will be set up to point to the DOM element that we're interacting with
