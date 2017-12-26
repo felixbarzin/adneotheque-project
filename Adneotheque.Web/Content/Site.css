@@ -6,6 +6,7 @@
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-family: Montserrat;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -222,3 +223,44 @@ input {
     color: black;
     border: 2px solid #008CBA; 
 }
+
+.headerstyle {
+    background-color:#ff1738;
+    color: #fff;
+    border: none;
+}
+
+.headerstyle a {
+    color: #fff;
+}
+
+.homebtn {
+    font-weight: 600;
+    color: #fff;
+}
+
+.homebtn img {
+    width: 100px;
+    margin-bottom: 10px;
+}
+
+.box {
+    border-radius: 5px;
+    width: 25%;
+    margin:3%;
+    text-align: center;
+    padding: 10px;
+}
+
+.box a:hover{
+    color: #ff1738;
+}
+
+.purple {
+    background-color: #241b50;
+}
+
+.cian {
+    background-color: #53bfb2;
+}
+

@@ -17,6 +17,7 @@ namespace adneotheque_solution.Controllers
             return View();
         }
 
+        [Authorize(Users = "ADN-BE-019P\\felix")]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

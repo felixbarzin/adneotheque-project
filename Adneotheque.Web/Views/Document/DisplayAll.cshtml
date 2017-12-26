@@ -54,17 +54,11 @@
                        data-adneotheque-autocomplete="@Url.Action("Autocomplete", new {category = @Model.SelectedCategory})"
                        class="form-control" />
                 <input type="submit"
-                       @*name="buttonFilter"*@
                        value="Search By Title"
                        class="blueButtonInput" />
             </div>
 
                 <div class="col-md-4">
-
-                    @*<label>
-                            <input type="checkbox" name="available" value="true"/>
-                            Show only availble documents ?
-                        </label><br />*@
                     @Html.EditorFor(m => m.Available)
                     <label>Show only available documents ?</label>
                     <br />
