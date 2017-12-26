@@ -8,11 +8,17 @@ using Adneotheque.Entities;
 using Adneotheque.Entities.Persistence.EntityConfigurations;
 using System.Reflection;
 using System.Data.Entity.ModelConfiguration;
+using System.Runtime.InteropServices;
 using Adneotheque.Entities.Entities;
 
 namespace Adneotheque.Data
 {
-    public class AdneothequeDbContext : DbContext
+    public interface IAdneothequeDbContext : IDisposable
+    {
+        IQueryable<T> Query<T>() where T : class;
+    }
+
+    public class AdneothequeDbContext : DbContext, IAdneothequeDbContext
     {
         public AdneothequeDbContext(): base("DefaultConnection")
         {
@@ -22,6 +28,8 @@ namespace Adneotheque.Data
         public DbSet<Document> Documents { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Review> Reviews { get; set; }
+
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -39,6 +47,13 @@ namespace Adneotheque.Data
             base.OnModelCreating(modelBuilder);
             #endregion
 
+        }
+
+        // Explicit definition meaning that we can only get to this query method
+        // through an IAdneothequeDbContext reference.
+        IQueryable<T> IAdneothequeDbContext.Query<T>()
+        {
+            return Set<T>();
         }
     }
 }

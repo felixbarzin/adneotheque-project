@@ -19,7 +19,7 @@ namespace Adneotheque.Data.Repositories
     {
         Task<TDocument> GetByDocumentIdAsync(string documentId);
 
-        Task<IEnumerable<object>> AutocompleteAsync(string term, /*DocumentViewModel model,*/ string category);
+        Task<IEnumerable<object>> AutocompleteAsync(string term, string category);
         Task<IEnumerable<object>> AutocompleteDocumentIdAsync(string term);
 
         Task<IEnumerable<TDocument>> GetAllWithSearchTermAndPageAsync(string searchTerm);
@@ -89,8 +89,6 @@ namespace Adneotheque.Data.Repositories
                 .ProjectTo<DocumentViewModel>()
                 .ToListAsync();
 
-            //var documents = AutoMapper.Mapper.Map<IEnumerable<Document>, IEnumerable<DocumentViewModel>>(documentsAsync);
-
             return documentsAsync;
 
         }
@@ -154,64 +152,9 @@ namespace Adneotheque.Data.Repositories
                     .Select(d => d)
                     .ToList();
             }
-            //else
-            //{
-            //    documents = documents
-            //        .Where((d => d.Available == true || d.Available == false))
-            //        .Select(d => d)
-            //        .ToList();
-
-            //}
-
 
             return documents;
 
-            ////On a ni catégorie ni terme de recherche
-            //if (String.IsNullOrEmpty(category) && String.IsNullOrEmpty(searchTerm))
-            //{
-            //    if (!String.IsNullOrEmpty(filter))
-            //    {
-            //        switch (filter)
-            //        {
-            //            case "Rating":
-            //                filteredList = documents
-            //                    .OrderByDescending(d => d.Rating)
-            //                    .ToList();
-            //                break;
-            //            default:
-            //                documents = documents.OrderBy(d => d.Title);
-            //                break;
-            //        }
-            //    }
-            //}
-
-
-
-            ////On a une catégorie et un terme de recherche
-            //if (!String.IsNullOrEmpty(category) && !String.IsNullOrEmpty(searchTerm))
-            //{
-            //    if (!String.IsNullOrEmpty(filter))
-            //    {
-            //        switch (filter)
-            //        {
-            //            case "Rating":
-            //                filteredList = documents
-            //                    .Where(d => d.DocumentCategories ==
-            //                                (DocumentCategories)System.Enum.Parse(typeof(DocumentCategories), category) &&
-            //                                d.Title.ToLower().Contains(searchTerm))
-            //                    .Select(d => d)
-            //                    .OrderBy(d => d.Rating)
-            //                    .ToList();
-            //                break;
-            //            default:
-            //                documents = documents.OrderBy(d => d.Title);
-            //                break;
-            //        }
-            //    }
-            //}
-
-
-            //return filteredList;
         }
 
         public async Task<IEnumerable<DocumentViewModel>> GetAllWithSearchTermAndPageAsync(string searchTerm)
@@ -303,10 +246,7 @@ namespace Adneotheque.Data.Repositories
         {
             var document = _documentContext
                 .First(d => d.DocumentIdentifier == t.DocumentIdentifier);
-            //var test = AutoMapper.Mapper.Map<DocumentViewModel, Document>(t);
-
                 
-                //AutoMapper.Mapper.Map<Document>(t);
                 AutoMapper.Mapper.Map(t, document);
 
 
