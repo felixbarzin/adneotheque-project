@@ -75,6 +75,7 @@
     <Compile Include="Entities\Author.cs" />
     <Compile Include="Entities\Document.cs" />
     <Compile Include="Enums\DocumentCategories.cs" />
+    <Compile Include="Enums\DocumentLangage.cs" />
     <Compile Include="Persistence\EntityConfigurations\AuthorEntityMappingConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\DocumentEntityMappingConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\ReviewEntityMappingConfiguration.cs" />

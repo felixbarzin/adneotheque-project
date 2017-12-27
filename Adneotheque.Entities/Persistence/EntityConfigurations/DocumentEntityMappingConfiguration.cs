@@ -29,6 +29,18 @@ namespace Adneotheque.Entities.Persistence.EntityConfigurations
             Property(d => d.Available)
                 .IsRequired();
 
+            Property(d => d.DayAdded)
+                .IsRequired();
+
+            Property(d => d.DayBorrowed)
+                .IsOptional();
+
+            Property(d => d.BorrowedCounter)
+                .IsOptional();
+
+            Property(d => d.DocumentLangage)
+                .IsRequired();
+
             //Navigation properties
             HasMany(d => d.Authors)
                 .WithMany(d => d.Documents);

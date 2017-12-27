@@ -14,6 +14,10 @@ namespace Adneotheque.Entities.Entities
         public DocumentCategories DocumentCategories { get; set; }
         public string DocumentIdentifier { get; set; }
         public Boolean Available { get; set; }
+        public DateTime DayAdded { get; set; }
+        public DateTime? DayBorrowed { get; set; }
+        public int? BorrowedCounter { get; set; }
+        public  DocumentLangage DocumentLangage { get; set; }
 
         //Navigation properties
         public virtual ICollection<Author> Authors { get; set; }
