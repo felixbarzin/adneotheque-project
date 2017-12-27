@@ -32,40 +32,43 @@ namespace Adneotheque.Data.Migrations
 
             Random rnd = new Random();
 
-            //var reviewsFaker = new Faker<Review>()
-            //    .RuleFor(r => r.Id, f => f.IndexFaker)
-            //    .RuleFor(r => r.Body, f => f.Lorem.Paragraph())
-            //    .RuleFor(r => r.Rating, f => f.Random.Int(100))
-            //    .RuleFor(r => r.ReviewerName, f => f.Name.FirstName());
-                
-            ////.RuleFor(r => r.Document, f => documents[rnd.Next(0,documents.Count)]);
-
-            //var reviews = reviewsFaker.Generate(25);
-
             Array values = Enum.GetValues(typeof(DocumentCategories));
 
             var documentsFaker = new Faker<Document>()
                 .RuleFor(d => d.Id, f => f.IndexFaker)
                 .RuleFor(d => d.Title, f => f.Lorem.Sentence(2))
                 .RuleFor(d => d.DocumentCategories, f => (DocumentCategories)values.GetValue(rnd.Next(values.Length)))
+                .RuleFor(d => d.DocumentLangage, f => (DocumentLangage)values.GetValue(rnd.Next(values.Length)))
                 .RuleFor(d => d.DocumentIdentifier, f => Guid.NewGuid().ToString())
                 .RuleFor(d => d.Available, f => f.Random.Bool())
+                .RuleFor(d => d.BorrowedCounter, f => f.Random.Int(0,14))
+                .RuleFor(d => d.DayAdded, f => f.Date.Recent())
                 .RuleFor(d => d.Authors, f => authors.OrderBy(x => rnd.Next()).Take(rnd.Next(1, 4)).ToList())
                 .RuleFor(d => d.Reviews, f => new Faker<Review>()
                     .RuleFor(r => r.Rating, fa => fa.Random.Bool())
                     .RuleFor(r => r.ReviewerName, fa => fa.Name.FullName())
                     .RuleFor(r => r.Id, fa => fa.IndexFaker)
-                    .RuleFor(r => r.Body, fa => fa.Lorem.Paragraph()).Generate(rnd.Next(1,10)));
+                    .RuleFor(r => r.Body, fa => fa.Lorem.Paragraph()).Generate(rnd.Next(1,10)))
+                .FinishWith((f, d) => 
+                {
+                    if (!d.Available)
+                    {
+                        d.DayBorrowed = f.Date.Recent();
+                    }
+                });
                 
-
             var documents = documentsFaker.Generate(20);
+
+            //foreach(var item in documents){
+            //    if(item.Available)
+            //        item.DayBorrowed = DateTime.
+            //}
 
             try
             {
                 foreach (var item in documents)
                 {
                     context.Documents.AddOrUpdate(c => c.Id, item);
-
                 }
             }
             catch (Exception e)
@@ -73,8 +76,6 @@ namespace Adneotheque.Data.Migrations
                 Console.WriteLine(e);
                 throw new Exception(e.Message);
             }
-
-
         }
     }
 }

@@ -17,6 +17,9 @@ namespace Adneotheque.Data.Repositories
 {
     public interface IDocumentRepository<TDocument> : IRepository<DocumentViewModel>
     {
+        Task<TDocument> GetMostRecentAsync();
+        Task<TDocument> GetLatestAddedAsync();
+        Task<TDocument> GetMostReadAsync();
         Task<TDocument> GetByDocumentIdAsync(string documentId);
 
         Task<IEnumerable<object>> AutocompleteAsync(string term, string category);
@@ -39,6 +42,49 @@ namespace Adneotheque.Data.Repositories
         {
             _adneothequeDbContext = dbContext;
             _documentContext = dbContext.Documents;
+        }
+
+        public async Task<DocumentViewModel> GetMostRecentAsync()
+        {
+            var documentsAsync = await _adneothequeDbContext
+                .Documents
+                .ProjectTo<DocumentViewModel>()
+                .ToListAsync();
+
+            var model = documentsAsync
+                .OrderByDescending(d => d.DayAdded)
+                .FirstOrDefault();
+
+            return model;
+        }
+
+        public async Task<DocumentViewModel> GetLatestAddedAsync()
+        {
+            var documentsAsync = await _adneothequeDbContext
+                .Documents
+                .ProjectTo<DocumentViewModel>()
+                .ToListAsync();
+
+            var model = documentsAsync
+                .Where(d => !d.Available)
+                .OrderByDescending(d => d.DayBorrowed)
+                .FirstOrDefault();
+
+            return model;
+        }
+
+        public async Task<DocumentViewModel> GetMostReadAsync()
+        {
+            var documentsAsync = await _adneothequeDbContext
+                .Documents
+                .ProjectTo<DocumentViewModel>()
+                .ToListAsync();
+
+            var model = documentsAsync
+                .OrderByDescending(d => d.BorrowedCounter)
+                .FirstOrDefault();
+
+            return model;
         }
 
         public async Task InsertAsync(DocumentViewModel t)
