@@ -246,6 +246,7 @@
     <Content Include="Views\Document\_Test.cshtml" />
     <Content Include="Views\Document\DisplayAll.cshtml" />
     <Content Include="Views\Document\_Documents.cshtml" />
+    <Content Include="Views\Home\_Details.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

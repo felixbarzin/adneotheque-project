@@ -3,13 +3,58 @@
 }
 
 <div class="row" style="padding-top: 60px">
-    <div class="col-md-4 box purple">
-        <a class="homebtn" href="" ><img src="~/Content/ASSETS/icon_add.png" alt="add book" /><p>Latest added</p></a>
-    </div>
-    <div class="col-md-4 box cian">
-        <a class="homebtn" href=""><img src="~/Content/ASSETS/icon_borrow.png" alt="borrow book" /><p>Latest borrowed</p></a>
-    </div>
-    <div class="col-md-4 box purple">
-        <a class="homebtn" href=""><img src="~/Content/ASSETS/icon_mostread.png" alt="most read book" /><p>Most read</p></a>
-    </div>
+
+    @using (Ajax.BeginForm(
+                                    "MostRecent",
+                                    "Home",
+                                    new AjaxOptions
+                                    {
+                                        HttpMethod = "get",
+                                        InsertionMode = InsertionMode.Replace,
+                                        UpdateTargetId = "documentDetails"
+                                    },
+                                    new { id = "latestAdded" }))
+    {
+
+        <div class="col-md-4 box purple">
+            <a class="homebtn" id="latestAddedLink" href="" onclick="$(this).parents('form').submit();return false;"><img src="~/Content/ASSETS/icon_add.png" alt="add book" /><p>Latest added</p></a>
+        </div>
+    }
+
+    @using (Ajax.BeginForm(
+                                        "LatestBorrowed",
+                                        "Home",
+                                        new AjaxOptions
+                                        {
+                                            HttpMethod = "get",
+                                            InsertionMode = InsertionMode.Replace,
+                                            UpdateTargetId = "documentDetails"
+                                        },
+                                        new { id = "latestBorrowed" }))
+    {
+
+        <div class="col-md-4 box cian">
+            <a class="homebtn" id="latestBorrowedLink" href="" onclick="$(this).parents('form').submit();return false;"><img src="~/Content/ASSETS/icon_borrow.png" alt="borrow book" /><p>Latest borrowed</p></a>
+        </div>
+    }
+
+    @using (Ajax.BeginForm(
+                                        "MostRead",
+                                        "Home",
+                                        new AjaxOptions
+                                        {
+                                            HttpMethod = "get",
+                                            InsertionMode = InsertionMode.Replace,
+                                            UpdateTargetId = "documentDetails"
+                                        },
+                                        new { id = "mostRead" }))
+    {
+
+        <div class="col-md-4 box purple">
+            <a class="homebtn" id="mostReadLink" href="" onclick="$(this).parents('form').submit();return false;"><img src="~/Content/ASSETS/icon_mostread.png" alt="most read book" /><p>Most read</p></a>
+        </div>
+    }
+
 </div>
+
+@Html.Partial("_Details")

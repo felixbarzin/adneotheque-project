@@ -70,5 +70,33 @@
     $("input[data-adneotheque-autocomplete]").each(createAutocomplete);
     $(".body-content").on("click", ".pagedList a", getPage);
     $("input[data-adneotheque-autocomplete-documentId]").each(createAutocompleteForDocumentId);
+
+    $('#latestAddedLink').click(function () {
+
+        $('#latestAdded').submit(function (event) {
+            eval($(this).attr("onsubmit"));
+            
+
+        });
+    });
+
+    $('#latestBorrowedLink').click(function () {
+
+        $('#latestBorrowed').submit(function (event) {
+            eval($(this).attr("onsubmit"));
+            
+
+        });
+    });
+
+    $('#mostReadLink').click(function () {
+
+        $('#mostRead').submit(function (event) {
+            eval($(this).attr("onsubmit"));
+
+
+        });
+    });
+
 });
 

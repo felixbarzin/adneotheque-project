@@ -1,0 +1,74 @@
+﻿@model Adneotheque.ViewModels.DocumentViewModel
+
+<div id="documentDetails">
+    @if (Model != null)
+    {
+        <div id="documentDetails">
+                <div>
+                    <h4>Quick view</h4>
+                    <hr />
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.DocumentCategories)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.DocumentCategories)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Title)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Title)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.DocumentLangage)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.DocumentLangage)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.DocumentIdentifier)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.DocumentIdentifier)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Available)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Available)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.DayAdded)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.DayAdded)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Rating)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Rating) % (Based on @Model.Reviews.Count reviews)
+                        </dd>
+
+                    </dl>
+                </div>
+            </div>
+    }
+
+</div>
+    
+
+

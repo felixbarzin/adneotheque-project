@@ -151,7 +151,10 @@ namespace adneotheque_solution.Controllers
             {
                 ViewBag.Category = category;
 
-                return PartialView("_FormCreateDocument");
+                DocumentViewModel model = new DocumentViewModel();
+                //var test = model.Langages;
+
+                return PartialView("_FormCreateDocument", model);
             }
 
             return View();
@@ -166,6 +169,7 @@ namespace adneotheque_solution.Controllers
                 if (ModelState.IsValid)
                 {
                     documentViewModel.Available = true;
+                    documentViewModel.DayAdded = DateTime.Now;
                     await _documentService.DocumentRepository.InsertAsync(documentViewModel);
                     return RedirectToAction("DisplayAll");
                 }
@@ -246,6 +250,7 @@ namespace adneotheque_solution.Controllers
         {
             DocumentViewModel model = await _documentService.DocumentRepository.GetByIdAsync(id);
             model.Available = false;
+            model.BorrowedCounter++;
             await _documentService.DocumentRepository.UpdateAsync(model);
 
             return RedirectToAction("DisplayAll");
