@@ -12,6 +12,7 @@ using Adneotheque.Entities.Enums;
 using Adneotheque.ViewModels;
 using AutoMapper.QueryableExtensions;
 using PagedList;
+using Adneotheque.Data.Services;
 
 namespace Adneotheque.Data.Repositories
 {
@@ -37,11 +38,14 @@ namespace Adneotheque.Data.Repositories
     {
         private readonly AdneothequeDbContext _adneothequeDbContext;
         private readonly DbSet<Document> _documentContext;
+        private readonly AuthorService _authorService;
 
         public DocumentRepository(AdneothequeDbContext dbContext)
         {
             _adneothequeDbContext = dbContext;
             _documentContext = dbContext.Documents;
+            _authorService = new AuthorService();
+
         }
 
         public async Task<DocumentViewModel> GetMostRecentAsync()
@@ -91,7 +95,16 @@ namespace Adneotheque.Data.Repositories
         {
             var document = AutoMapper.Mapper.Map<DocumentViewModel, Document>(t);
 
-            _documentContext.Add(document);
+            document.Authors = new List<Author>();
+
+            var listAuthors = _authorService.AuthorRepository.GetByIdWithoutMappingList(t, _adneothequeDbContext);
+
+            foreach(var item in listAuthors)
+            {
+                document.Authors.Add(item);
+            }
+
+            _adneothequeDbContext.Documents.Add(document);
 
             await _adneothequeDbContext.SaveChangesAsync();
         }

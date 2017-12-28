@@ -20,17 +20,34 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.DocumentLangage, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                    @Html.DropDownList("SelectedLangage",
-                    new SelectList(Model.Langages, "Value", "Text"),
-                    
-                    new { @class = "form-control", Name = "Selectedlangage" })                            
-                    @Html.ValidationMessageFor(model => model.DocumentLangage, "", new { @class = "text-danger" })
+                        @Html.LabelFor(model => model.Authors, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-5">
+                            @Html.DropDownList("SelectedAuthors",
+                            new SelectList(Model.AuthorsSelectListItem, "Value", "Text"),
+
+                            new { @class = "form-control", Name = "Selectedauthors" })
+                            @Html.ValidationMessageFor(model => model.Authors, "", new { @class = "text-danger" })
                         </div>
+                        <div class="col-md-2">
+                            <button type="button" class="borderButton" id="addAuthor">Add</button>
+                        </div>
+                        <br/>
+                        <div class="col-md-10">
+                            <ul name="addedAuthors" id="addedAuthors"></ul>
+                        </div>
+
                     </div>
 
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DocumentLangage, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("SelectedLangage",
+                            new SelectList(Model.Langages, "Value", "Text"),
                     
+                            new { @class = "form-control", Name = "Selectedlangage" })                            
+                            @Html.ValidationMessageFor(model => model.DocumentLangage, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                     
                     <div class="form-group">
                         <label class="control-label col-md-2" for="DocumentCategories">Identifier</label>
@@ -45,7 +62,7 @@
                         <div class="col-md-10">
 
                             <input class="form-control text-box single-line" data-val="true" data-val-required="The DocumentCategories field is required." id="DocumentCategories" name="DocumentCategories" readonly="readonly" type="text" value=@ViewBag.Category>
-
+                            
                             @Html.ValidationMessageFor(model => model.DocumentCategories, "", new {@class = "text-danger"})
                         </div>
                     </div>
@@ -63,3 +80,26 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    //Add author when creating a new document
+    $('#addAuthor').click(function () {
+
+        var selectedAuthorText = $('#SelectedAuthors option:selected').text();
+        var selectedAuthorValue = $('#SelectedAuthors option:selected').val();
+
+        $('#SelectedAuthors option[value=\'' + selectedAuthorValue + '\']').remove();
+
+        $('#addedAuthors').append('<li  id="' + selectedAuthorValue + '" class="addedAuthorsLi">' + selectedAuthorText + '<input type="hidden" name="authorsIdAddedLi" value="' + selectedAuthorValue + '" /></li>')
+    });
+
+    //Delete an author when creating a new document
+    $(document).on('click', '.addedAuthorsLi', function () {
+        var li = $(this);
+        console.log("value:" + li.attr("id"));
+        $('#SelectedAuthors').append("<option value='" + li.attr("id") + "'>" + li.text() + "</option>");
+
+        li.remove();
+    });
+</script>

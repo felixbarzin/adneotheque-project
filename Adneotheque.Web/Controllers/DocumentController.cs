@@ -13,11 +13,13 @@ namespace adneotheque_solution.Controllers
     public class DocumentController : Controller
     {
         private readonly DocumentService _documentService;
+        private readonly AuthorService _authorService;
         const int pageSize = 8;
 
         public DocumentController()
         {
             _documentService = new DocumentService();
+            _authorService = new AuthorService();
         }
 
         public async Task<ActionResult> DisplayAll(string searchTerm, int page = 1)
@@ -145,14 +147,14 @@ namespace adneotheque_solution.Controllers
         // GET: Document/Create
         // Use Ajax for displaying a form allowing the user to add a document in DB
         [HttpGet]
-        public ActionResult Create(String category = null)
+        public async Task<ActionResult> Create(String category = null)
         {
             if (Request.IsAjaxRequest() && category != null)
             {
                 ViewBag.Category = category;
 
                 DocumentViewModel model = new DocumentViewModel();
-                //var test = model.Langages;
+                model.AuthorsSelectListItem = await _authorService.AuthorRepository.GetAuthorSelectListItemAsync();
 
                 return PartialView("_FormCreateDocument", model);
             }
@@ -162,12 +164,20 @@ namespace adneotheque_solution.Controllers
 
         // POST: Document/Create
         [HttpPost]
-        public async Task<ActionResult> Create(DocumentViewModel documentViewModel)
+        public async Task<ActionResult> Create(DocumentViewModel documentViewModel, int[] authorsIdAddedLi)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    documentViewModel.Authors = new List<AuthorViewModel>();
+
+                    foreach(var item in authorsIdAddedLi)
+                    {
+                        var author = _authorService.AuthorRepository.GetById(item);
+                        documentViewModel.Authors.Add(author);
+                    }
+
                     documentViewModel.Available = true;
                     documentViewModel.DayAdded = DateTime.Now;
                     await _documentService.DocumentRepository.InsertAsync(documentViewModel);

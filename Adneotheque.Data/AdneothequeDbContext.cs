@@ -33,6 +33,17 @@ namespace Adneotheque.Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            ////Many to many need configurations ?
+            modelBuilder.Entity<Document>()
+                .HasMany<Author>(d => d.Authors)
+                .WithMany(a => a.Documents)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("Id");
+                    cs.MapRightKey("Id");
+                    cs.ToTable("AuthorDocuments");
+                });
+
             #region Dynamically load EF Code First Configurations
             var typesToRegister = Assembly.GetAssembly(typeof(AuthorEntityMappingConfiguration)).GetTypes()
                 .Where(type => type.Namespace != null && type.Namespace.Equals(typeof(AuthorEntityMappingConfiguration).Namespace))

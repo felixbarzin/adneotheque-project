@@ -65,38 +65,32 @@
 
     };
 
-
-
     $("input[data-adneotheque-autocomplete]").each(createAutocomplete);
     $(".body-content").on("click", ".pagedList a", getPage);
     $("input[data-adneotheque-autocomplete-documentId]").each(createAutocompleteForDocumentId);
 
+    //Fun Fact
     $('#latestAddedLink').click(function () {
 
         $('#latestAdded').submit(function (event) {
             eval($(this).attr("onsubmit"));
-            
-
         });
     });
 
+    //Fun fact
     $('#latestBorrowedLink').click(function () {
 
         $('#latestBorrowed').submit(function (event) {
             eval($(this).attr("onsubmit"));
-            
-
         });
     });
 
+    //Fun fact
     $('#mostReadLink').click(function () {
 
         $('#mostRead').submit(function (event) {
             eval($(this).attr("onsubmit"));
-
-
         });
     });
-
 });
 

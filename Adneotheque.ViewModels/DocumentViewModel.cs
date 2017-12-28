@@ -64,6 +64,8 @@ namespace Adneotheque.ViewModels
             }
         }
 
+        public List<SelectListItem> AuthorsSelectListItem { get; set; }
+
         private List<SelectListItem> _langages;
         public List<SelectListItem> Langages
         {
@@ -74,16 +76,12 @@ namespace Adneotheque.ViewModels
             }
         }
 
-        public string SelectedCategory { get; set; }
-
-        public virtual ICollection<ReviewViewModel> Reviews { get; set; }
-
         public List<SelectListItem> GetDocumentCategoriesList()
         {
             List<SelectListItem> documentCategoriesList = new List<SelectListItem>();
             foreach (string d in Enum.GetNames(typeof(DocumentCategories)))
             {
-                documentCategoriesList.Add(new SelectListItem(){ Text = d, Value = d});
+                documentCategoriesList.Add(new SelectListItem() { Text = d, Value = d });
             }
 
             return documentCategoriesList;
@@ -92,15 +90,31 @@ namespace Adneotheque.ViewModels
         public List<SelectListItem> GetLangageList()
         {
             List<SelectListItem> langageList = new List<SelectListItem>();
-            foreach(string d in Enum.GetNames(typeof(DocumentLangage)))
+            foreach (string d in Enum.GetNames(typeof(DocumentLangage)))
             {
                 langageList.Add(new SelectListItem() { Text = d, Value = d });
             }
 
-            langageList.Add(new SelectListItem() { Text = "French", Value = "French", Selected=true});
+            langageList.Add(new SelectListItem() { Text = "French", Value = "French", Selected = true });
 
             return langageList;
         }
+
+        //public List<SelectListItem> GetAuthorsList()
+        //{
+        //    List<SelectListItem> authorsList = new List<SelectListItem>();
+
+        //    foreach ()
+        //    {
+
+        //    }
+        //}
+
+        public string SelectedCategory { get; set; }
+
+        public virtual ICollection<ReviewViewModel> Reviews { get; set; }
+        public virtual ICollection<AuthorViewModel> Authors { get; set; }
+
 
     }
 }
