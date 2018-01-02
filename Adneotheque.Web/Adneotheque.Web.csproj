@@ -160,6 +160,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AuthorController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
@@ -247,6 +248,7 @@
     <Content Include="Views\Document\DisplayAll.cshtml" />
     <Content Include="Views\Document\_Documents.cshtml" />
     <Content Include="Views\Home\_Details.cshtml" />
+    <Content Include="Views\Author\_CreateAuthor.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

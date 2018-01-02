@@ -20,9 +20,11 @@ namespace Adneotheque.Data.Repositories
     public class AuthorRepository : IAuthorRepository<AuthorViewModel>
     {
         private readonly DbSet<Author> _authorContext;
+        private readonly AdneothequeDbContext _adneothequeDbContext;
 
         public AuthorRepository(AdneothequeDbContext context)
         {
+            _adneothequeDbContext = context;
             _authorContext = context.Authors;
         }
 
@@ -87,9 +89,14 @@ namespace Adneotheque.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public Task InsertAsync(AuthorViewModel t)
+        public async Task InsertAsync(AuthorViewModel t)
         {
-            throw new NotImplementedException();
+
+            var author = AutoMapper.Mapper.Map<AuthorViewModel, Author>(t);
+
+            _adneothequeDbContext.Authors.Add(author);
+
+            await _adneothequeDbContext.SaveChangesAsync();
         }
 
         public Task UpdateAsync(AuthorViewModel t)

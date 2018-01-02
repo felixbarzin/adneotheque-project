@@ -33,11 +33,23 @@
                         </div>
                         <br/>
                         <div class="col-md-10">
+                            @Ajax.ActionLink("The author you're looking for is not in the list ?",
+                            "Create",
+                            "Author",
+                            null,
+                            new AjaxOptions
+                            {
+                                HttpMethod = "get",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "insertAuthor"
+                            },
+                            new { style = "padding-left:25px;" })
+                        </div>
+                        <div class="col-md-10">
                             <ul name="addedAuthors" id="addedAuthors"></ul>
                         </div>
-
                     </div>
-
+                    
                     <div class="form-group">
                         @Html.LabelFor(model => model.DocumentLangage, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
@@ -78,6 +90,9 @@
         <div class="col-lg-4 guidDiv">
             @Html.Partial("_GUIDButton")
         </div>
+        <div class="col-lg-4 guidDiv">
+            <div id="insertAuthor"></div>
+        </div>
     </div>
 </div>
 
@@ -91,7 +106,7 @@
 
         $('#SelectedAuthors option[value=\'' + selectedAuthorValue + '\']').remove();
 
-        $('#addedAuthors').append('<li  id="' + selectedAuthorValue + '" class="addedAuthorsLi">' + selectedAuthorText + '<input type="hidden" name="authorsIdAddedLi" value="' + selectedAuthorValue + '" /></li>')
+        $('#addedAuthors').append('<li  id="' + selectedAuthorValue + '" class="addedAuthorsLi myList"><span class="glyphicon glyphicon-remove"></span> | ' + selectedAuthorText + '<input type="hidden" name="authorsIdAddedLi" value="' + selectedAuthorValue + '" /></li>')
     });
 
     //Delete an author when creating a new document
