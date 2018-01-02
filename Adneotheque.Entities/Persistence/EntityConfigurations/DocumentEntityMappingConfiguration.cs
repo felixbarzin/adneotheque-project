@@ -41,6 +41,12 @@ namespace Adneotheque.Entities.Persistence.EntityConfigurations
             Property(d => d.DocumentLangage)
                 .IsRequired();
 
+            Property(d => d.Pages)
+                .IsOptional();
+
+            Property(d => d.Summary)
+                .IsOptional();
+
             //Navigation properties
             HasMany(d => d.Authors)
                 .WithMany(d => d.Documents);

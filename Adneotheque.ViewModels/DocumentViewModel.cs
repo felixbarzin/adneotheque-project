@@ -36,6 +36,12 @@ namespace Adneotheque.ViewModels
         [DisplayName("Langage")]
         public DocumentLangage DocumentLangage { get; set; }
 
+        [Range(1,1000)]
+        public int Pages { get; set; }
+
+        [MaxLength(500)]
+        public string Summary { get; set; }
+
         public DateTime? DayBorrowed { get; set; }
         public int? BorrowedCounter { get; set; }
 
@@ -100,19 +106,10 @@ namespace Adneotheque.ViewModels
             return langageList;
         }
 
-        //public List<SelectListItem> GetAuthorsList()
-        //{
-        //    List<SelectListItem> authorsList = new List<SelectListItem>();
-
-        //    foreach ()
-        //    {
-
-        //    }
-        //}
-
         public string SelectedCategory { get; set; }
 
         public virtual ICollection<ReviewViewModel> Reviews { get; set; }
+        [DisplayName("Author(s)")]
         public virtual ICollection<AuthorViewModel> Authors { get; set; }
 
 

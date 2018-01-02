@@ -25,11 +25,7 @@ namespace Adneotheque.Data
                     //.ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                     //.ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title));
 
-
-
-
                 config.CreateMap<ReviewViewModel, Review>();
-
 
                 config.CreateMap<AuthorViewModel, Author>();
             });

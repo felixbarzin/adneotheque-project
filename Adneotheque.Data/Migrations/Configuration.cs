@@ -43,6 +43,8 @@ namespace Adneotheque.Data.Migrations
                 .RuleFor(d => d.Available, f => f.Random.Bool())
                 .RuleFor(d => d.BorrowedCounter, f => f.Random.Int(0,14))
                 .RuleFor(d => d.DayAdded, f => f.Date.Recent())
+                .RuleFor(d => d.Pages, f => f.Random.Int(10, 1000))
+                .RuleFor(d => d.Summary, f => f.Lorem.Paragraphs(rnd.Next(1,6)))
                 .RuleFor(d => d.Authors, f => authors.OrderBy(x => rnd.Next()).Take(rnd.Next(1, 4)).ToList())
                 .RuleFor(d => d.Reviews, f => new Faker<Review>()
                     .RuleFor(r => r.Rating, fa => fa.Random.Bool())

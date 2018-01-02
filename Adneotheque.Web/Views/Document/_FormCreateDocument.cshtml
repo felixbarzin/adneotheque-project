@@ -62,6 +62,14 @@
                     </div>
                     
                     <div class="form-group">
+                        @Html.LabelFor(model => model.Pages, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Pages, new { htmlAttributes = new { @class = "form-control" , @Value="1", @Min="1", @Max="1000"} })
+                            @Html.ValidationMessageFor(model => model.Pages, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="control-label col-md-2" for="DocumentCategories">Identifier</label>
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.DocumentIdentifier, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", Title ="Click on the button to Generate a unique identifier for the document." } })
@@ -76,6 +84,17 @@
                             <input class="form-control text-box single-line" data-val="true" data-val-required="The DocumentCategories field is required." id="DocumentCategories" name="DocumentCategories" readonly="readonly" type="text" value=@ViewBag.Category>
                             
                             @Html.ValidationMessageFor(model => model.DocumentCategories, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Summary, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.Summary, 3, 120, new { htmlAttributes = new { @class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.Summary, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-10">
+                            <p id="counter"></p>
                         </div>
                     </div>
 
@@ -116,5 +135,14 @@
         $('#SelectedAuthors').append("<option value='" + li.attr("id") + "'>" + li.text() + "</option>");
 
         li.remove();
+    });
+
+    //Count how many character you can write for summary
+    $('#Summary').keyup(function () {
+        var left = 500 - $(this).val().length;
+        if (left < 0) {
+            left = 0;
+        }
+        $('#counter').text('Characters left: ' + left);
     });
 </script>

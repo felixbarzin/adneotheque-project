@@ -18,8 +18,8 @@ namespace Adneotheque.Entities.Entities
         public DateTime? DayBorrowed { get; set; }
         public int? BorrowedCounter { get; set; }
         public  DocumentLangage DocumentLangage { get; set; }
-        //Pages
-        //Summary
+        public int Pages { get; set; }
+        public string Summary { get; set; }
 
         //Navigation properties
         public virtual ICollection<Author> Authors { get; set; }
