@@ -22,6 +22,7 @@ namespace adneotheque_solution.Controllers
             _authorService = new AuthorService();
         }
 
+        //Display a page with a list of all the documents inside the library, before filtering
         public async Task<ActionResult> DisplayAll(string searchTerm, int page = 1)
         {
             DocumentsWithFilters model = new DocumentsWithFilters
@@ -39,6 +40,7 @@ namespace adneotheque_solution.Controllers
             return View(model);
         }
 
+        //Display a page with a list of all the documents inside the library, after filtering
         public async Task<ActionResult> DisplayWithFilters(DocumentsWithFilters model, int page = 1)
         {
             if (Request.IsAjaxRequest())
@@ -61,15 +63,10 @@ namespace adneotheque_solution.Controllers
             return View("DisplayAll", model);
         }
 
-        public async Task<ActionResult> Autocomplete(string term, /*DocumentViewModel documentViewModel,*/ string category)
+        //Help the user to complete is research with autocompletion
+        public async Task<ActionResult> Autocomplete(string term, string category)
         {
             Session["SearchTerm"] = term;
-
-            //if (String.IsNullOrEmpty(category))
-            //    category = Session["SelectedCategory"].ToString();
-
-            //if (category.Equals(""))
-            //    category = null;
 
             System.Diagnostics.Debug.WriteLine(term);
 
@@ -108,8 +105,6 @@ namespace adneotheque_solution.Controllers
         [HttpPost]
         public async Task<ActionResult> DocumentReturn(DocumentViewModel documentViewModel)
         {
-            documentViewModel.Available = true;
-
             await _documentService.DocumentRepository.UpdateAsync(documentViewModel);
 
             return View();
@@ -247,6 +242,7 @@ namespace adneotheque_solution.Controllers
             }
         }
 
+        //Display a page when the user want to rent a document
         [HttpGet]
         public async Task<ActionResult> Grab(int id)
         {
@@ -255,13 +251,14 @@ namespace adneotheque_solution.Controllers
             return View(model);
         }
 
+        //When the user rent a document, it makes it unavailable for another user to rent the same document
         [HttpPost]
         public async Task<ActionResult> GrabPost(int id)
         {
             DocumentViewModel model = await _documentService.DocumentRepository.GetByIdAsync(id);
-            model.Available = false;
+            //model.Available = false;
             model.BorrowedCounter++;
-            await _documentService.DocumentRepository.UpdateAsync(model);
+            await _documentService.DocumentRepository.UpdateGrabAsync(model);
 
             return RedirectToAction("DisplayAll");
         }

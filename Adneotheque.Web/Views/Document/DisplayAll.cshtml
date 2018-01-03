@@ -7,16 +7,18 @@
 <br />
 <br />
 
-<p>
-    @Html.ActionLink("Insert a new document", "Create")<br />
+<p class="buttonStyle">
+    @Html.ActionLink("Insert a new document", "Create")
     @Html.ActionLink("A document is back", "DocumentReturn")
 </p>
-
 <br />
 
 <div class="container body-content">
     <div class="row">
-        <div class="col-md-4">
+        <h3>Filters</h3>
+    </div>
+    <div class="row">
+        <div class="col-md-4 filterstyle" style="margin-left: 0;">
 
             @using (Html.BeginForm("DisplayWithFilters", "Document"))
             {
@@ -28,7 +30,7 @@
                 <input type="submit"
                        name="buttonFilter"
                        value="Search By Category"
-                       class="blueButtonInput" />
+                       class="cianButtonInput" />
             }
 
         </div>
@@ -48,27 +50,26 @@
 
             @Html.HiddenFor(Model => Model.SelectedCategory);
 
-            <div class="col-md-4">
+            <div class="col-md-4 filterstyle">
                 <input type="search"
                        name="searchTerm"
                        data-adneotheque-autocomplete="@Url.Action("Autocomplete", new {category = @Model.SelectedCategory})"
                        class="form-control" />
                 <input type="submit"
                        value="Search By Title"
-                       class="blueButtonInput" />
+                       class="cianButtonInput" />
             </div>
 
-                <div class="col-md-4">
-                    @Html.EditorFor(m => m.Available)
-                    <label>Show only available documents ?</label>
+                <div class="col-md-4 filterstyle">
+                    <label>@Html.EditorFor(m => m.Available)Show only available documents ?</label>
                     <br />
                     <input type="submit"
                            value="Change"
-                           class="blueButtonInput" />
+                           class="cianButtonInput" />
                 </div>
         }
 
     </div>
 </div>
 
-@Html.Partial("_Documents");
+@Html.Partial("_Documents")

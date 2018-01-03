@@ -95,8 +95,9 @@ a.blueButtonLink {
         transform: scale(1.5);
     }
 
-.blueButtonInput {
-    background-color: #008CBA; /* Blue */
+.cianButtonInput {
+    /*background-color: #008CBA; /* Blue */
+    background-color: #53bfb2; /* Cian */
     border: none;
     color: white;
     padding: 10px 27px;
@@ -274,4 +275,38 @@ input {
 .cian {
     background-color: #53bfb2;
 }
+
+.buttonStyle a {
+    background-color: #ff1738;
+    padding: 10px;
+    border-radius: 5px;
+    color: #fff;
+    margin: 5px;
+}
+
+.filterstyle {
+    background-color: #eeeeee;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 1.5%;
+    width: 30%;
+}
+
+    .filterstyle select {
+        max-width:100%;
+    }
+
+    .filterstyle input {
+        width: 100%;
+        border-radius: 3px;
+    }
+
+    #Available {
+        width:auto;
+        margin: 8px;
+    }
+
+    .filterstyle label {
+        font-weight:400;
+    }
 

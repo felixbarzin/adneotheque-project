@@ -301,17 +301,45 @@ namespace Adneotheque.Data.Repositories
                 .FirstAsync(d => d.DocumentIdentifier == documentId);
         }
 
+        //That function cannot update a document entirely, it only makes it available
+        //TODO : improve that function or rename it
         public async Task UpdateAsync (DocumentViewModel t)
         {
             var document = _documentContext
                 .First(d => d.DocumentIdentifier == t.DocumentIdentifier);
-                
-                AutoMapper.Mapper.Map(t, document);
+            document.Available = true;
+                //AutoMapper.Mapper.Map(t, document);
 
+            try
+            {
+                _adneothequeDbContext.Entry(document).State = System.Data.Entity.EntityState.Modified;
 
-            _adneothequeDbContext.Entry(document).State = System.Data.Entity.EntityState.Modified;
+                await _adneothequeDbContext.SaveChangesAsync();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            
+        }
 
-            await _adneothequeDbContext.SaveChangesAsync();
+        public async Task UpdateGrabAsync(DocumentViewModel t)
+        {
+            var document = _documentContext
+                .First(d => d.DocumentIdentifier == t.DocumentIdentifier);
+            document.Available = false;
+
+            try
+            {
+                _adneothequeDbContext.Entry(document).State = System.Data.Entity.EntityState.Modified;
+
+                await _adneothequeDbContext.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
         }
 
         private bool _disposed = false;

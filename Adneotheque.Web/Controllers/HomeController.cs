@@ -20,20 +20,13 @@ namespace adneotheque_solution.Controllers
         }
 
         [OutputCache(CacheProfile = "Long", VaryByHeader = "X-Requested-With")]
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            //DocumentViewModel model = await _documentService.DocumentRepository.GetMostRecentAsync(); 
-
-            if (Request.IsAjaxRequest())
-            {
-                DocumentViewModel model = await _documentService.DocumentRepository.GetMostRecentAsync();
-
-                return PartialView("_Details", model);
-            }
 
             return View();
         }
 
+        #region Fun facts
         public async Task<ActionResult> MostRecent()
         {
             DocumentViewModel model = await _documentService.DocumentRepository.GetMostRecentAsync();
@@ -54,7 +47,9 @@ namespace adneotheque_solution.Controllers
 
             return PartialView("_Details", model);
         }
+        #endregion
 
+        //Test authorization and roles
         [Authorize(Users = "ADN-BE-019P\\felix")]
         public ActionResult Contact()
         {

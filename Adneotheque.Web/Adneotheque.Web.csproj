@@ -249,6 +249,8 @@
     <Content Include="Views\Document\_Documents.cshtml" />
     <Content Include="Views\Home\_Details.cshtml" />
     <Content Include="Views\Author\_CreateAuthor.cshtml" />
+    <Content Include="Views\Document\detailstest.cshtml" />
+    <Content Include="Views\Review\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

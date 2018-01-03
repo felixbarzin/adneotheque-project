@@ -42,7 +42,10 @@ namespace Adneotheque.ViewModels
         [MaxLength(500)]
         public string Summary { get; set; }
 
+        [DisplayName("Previous borrowing")]
         public DateTime? DayBorrowed { get; set; }
+
+        [DisplayName("Times borrowed")]
         public int? BorrowedCounter { get; set; }
 
         private int _rating;

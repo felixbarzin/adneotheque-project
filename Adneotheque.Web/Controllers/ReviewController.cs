@@ -19,6 +19,7 @@ namespace adneotheque_solution.Controllers
             _reviewService = new ReviewService();
             _documentService = new DocumentService();
         }
+
         // GET: Review
         // This action give a page that show all the reviews for a document
         public async Task<ActionResult> Index(int id)
